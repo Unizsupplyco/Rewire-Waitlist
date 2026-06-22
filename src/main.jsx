@@ -156,15 +156,59 @@ const achievementBadges = [
 ];
 
 function Achievements() {
+  const wheelRef = useRef(null);
+  const trackRef = useRef(null);
+
+  useEffect(() => {
+    const wheel = wheelRef.current;
+    const track = trackRef.current;
+    if (!wheel || !track) return;
+    let frame;
+    let lastTime = performance.now();
+    let offset = 0;
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const positionBadges = () => {
+      const firstGroup = track.querySelector('.achievement-wheel-group');
+      if (!firstGroup) return;
+      const groupWidth = firstGroup.offsetWidth;
+      if (!offset) offset = -groupWidth;
+      const center = wheel.clientWidth / 2;
+      [...track.querySelectorAll('.achievement-wheel-item')].forEach(item => {
+        const itemCenter = item.offsetLeft + offset + item.offsetWidth / 2;
+        const distance = Math.abs(itemCenter - center);
+        const focus = Math.max(0, 1 - distance / (wheel.clientWidth * .46));
+        item.style.transform = `translateY(${10 - focus * 30}px) scale(${.72 + focus * .28})`;
+        item.style.opacity = `${.38 + focus * .62}`;
+        item.style.zIndex = `${Math.round(focus * 10)}`;
+      });
+      track.style.transform = `translate3d(${offset}px,0,0)`;
+      return groupWidth;
+    };
+
+    const animate = time => {
+      const groupWidth = positionBadges();
+      if (groupWidth && !reducedMotion) {
+        offset -= Math.min(40, time - lastTime) * .032;
+        if (offset <= -groupWidth * 2) offset += groupWidth;
+      }
+      lastTime = time;
+      frame = requestAnimationFrame(animate);
+    };
+
+    frame = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(frame);
+  }, []);
+
   return <section className="achievements-section" id="achievements">
     <div className="achievements-heading shell">
       <div className="pill-label">Achievements</div>
       <h2>Unlock unique achievements</h2>
       <p>Turn every milestone into visible proof of the discipline you’re building.</p>
     </div>
-    <div className="achievement-wheel" aria-label="Achievement badge conveyor">
-      <div className="achievement-wheel-track">
-        {[0, 1].map(group => <div className="achievement-wheel-group" aria-hidden={group === 1 ? 'true' : undefined} key={group}>
+    <div className="achievement-wheel" ref={wheelRef} aria-label="Achievement badge conveyor">
+      <div className="achievement-wheel-track" ref={trackRef}>
+        {[0, 1, 2, 3].map(group => <div className="achievement-wheel-group" aria-hidden={group === 1 ? undefined : 'true'} key={group}>
           {achievementBadges.map(([image, alt]) => <div className="achievement-wheel-item" key={`${group}-${image}`}>
             <img src={image} alt={group === 0 ? alt : ''} />
           </div>)}
