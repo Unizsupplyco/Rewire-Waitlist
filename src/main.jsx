@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import {
   ArrowRight, Check, ChevronLeft, ChevronRight, CircleCheck, Flame, Heart, LockKeyhole,
@@ -39,10 +39,6 @@ function Hero() {
   const markPhoneLoaded = (phone) => setLoadedPhones(current => current.includes(phone) ? current : [...current, phone]);
   return <main>
     <section className="hero shell">
-      <svg className="hero-waitlist-arrow" viewBox="0 0 100 150" aria-hidden="true">
-        <path className="arrow-line" d="M27 145 C15 128 43 115 29 97 C17 81 48 67 37 50 C29 37 54 27 72 8" />
-        <path className="arrow-head" d="M60 12 L72 8 L69 21" />
-      </svg>
       <h1>Your Trusted Partner<br/>for <span>Breaking the Cycle</span></h1>
       <p>Build better habits, take your control back<br className="desktop"/> and rebuild discipline — <strong>one day at a time.</strong></p>
       <a className="store-row" href="#waitlist" aria-label="Join the Rewire launch waitlist">
@@ -55,6 +51,37 @@ function Hero() {
       </div>
     </section>
   </main>;
+}
+
+function ScrollStatement() {
+  const sectionRef = useRef(null);
+  const [progress, setProgress] = useState(0);
+  const words = 'We built Rewire to help you interrupt urges, understand your patterns, reclaim control, and become the disciplined version of yourself you know is possible.'.split(' ');
+
+  useEffect(() => {
+    const updateProgress = () => {
+      if (!sectionRef.current) return;
+      const rect = sectionRef.current.getBoundingClientRect();
+      const travel = Math.max(1, rect.height - window.innerHeight);
+      setProgress(Math.min(1, Math.max(0, -rect.top / travel)));
+    };
+    updateProgress();
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    window.addEventListener('resize', updateProgress);
+    return () => {
+      window.removeEventListener('scroll', updateProgress);
+      window.removeEventListener('resize', updateProgress);
+    };
+  }, []);
+
+  return <section className="scroll-statement" ref={sectionRef} aria-label="Why Rewire exists">
+    <div className="scroll-statement-inner shell">
+      <p>{words.map((word, index) => {
+        const wordProgress = Math.min(1, Math.max(0, progress * (words.length + 5) - index));
+        return <span key={`${word}-${index}`} style={{ '--word-progress': wordProgress }}>{word}{' '}</span>;
+      })}</p>
+    </div>
+  </section>;
 }
 
 function FeatureShowcase() {
@@ -70,7 +97,7 @@ function FeatureShowcase() {
       <div className="feature-media" aria-live="polite">
         <img
           key={activeMedia}
-          className="urge-carousel-phone"
+          className={`urge-carousel-phone urge-slide-${activeMedia + 1}`}
           src={mediaSlides[activeMedia][0]}
           alt={mediaSlides[activeMedia][1]}
         />
@@ -233,7 +260,7 @@ function App(){
   const path = window.location.pathname.replace(/\/$/,'');
   if(path === '/features') return <AppFeaturesPage/>;
   if(path === '/success') return <SuccessPage/>;
-  return <><Header/><Hero/><FeatureShowcase/><DistractionSection/><Effortless/><HowItWorks/><Testimonials/><Waitlist/><Footer/></>;
+  return <><Header/><Hero/><ScrollStatement/><FeatureShowcase/><DistractionSection/><Effortless/><HowItWorks/><Testimonials/><Waitlist/><Footer/></>;
 }
 
 createRoot(document.getElementById('root')).render(<App/>);
