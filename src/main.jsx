@@ -43,8 +43,8 @@ function Hero() {
         <path className="arrow-line" d="M27 145 C15 128 43 115 29 97 C17 81 48 67 37 50 C29 37 54 27 72 8" />
         <path className="arrow-head" d="M60 12 L72 8 L69 21" />
       </svg>
-      <h1>Your Trusted Partner for<br/><span>Breaking the Cycle</span></h1>
-      <p>Build better habits, beat urges, and rebuild discipline<br className="desktop"/> — one day at a time.</p>
+      <h1>Your Trusted Partner<br/>for <span>Breaking the Cycle</span></h1>
+      <p>Build better habits, take your control back<br className="desktop"/> and rebuild discipline — <strong>one day at a time.</strong></p>
       <a className="store-row" href="#waitlist" aria-label="Join the Rewire launch waitlist">
         <img src="/store-badges.png" alt="Coming soon on Google Play and the App Store" />
       </a>
