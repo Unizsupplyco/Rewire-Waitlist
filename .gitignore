@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.vite/
+*.log
+.env.local
+supabase/.temp/
+supabase/.temp-link-backup/
