@@ -26,7 +26,7 @@ function Header() {
     <div className="nav shell">
       <Brand />
       <nav className={open ? 'nav-links open' : 'nav-links'} aria-label="Main navigation">
-        <a href="#features">Features</a><a href="#how">How it works</a><a href="#stories">Stories</a><a href="#privacy">Privacy</a>
+        <a href="#purpose">Purpose</a><a href="#control">Control</a><a href="#distract">Distract</a><a href="#analytics">Analytics</a><a href="#how">How it works</a><a href="#stories">Stories</a>
       </nav>
       <a className="nav-cta" href="/#waitlist">Join waitlist</a>
       <button className="menu" onClick={() => setOpen(!open)} aria-label="Toggle navigation">{open ? <X /> : <Menu />}</button>
@@ -74,10 +74,10 @@ function ScrollStatement() {
     };
   }, []);
 
-  return <section className="scroll-statement" ref={sectionRef} aria-label="Why Rewire exists">
+  return <section className="scroll-statement" ref={sectionRef} id="purpose" aria-label="Why Rewire exists">
     <div className="scroll-statement-inner shell">
       <p>{words.map((word, index) => {
-        const wordProgress = Math.min(1, Math.max(0, progress * (words.length + 5) - index));
+        const wordProgress = Math.min(1, Math.max(0, progress * words.length - index));
         return <span key={`${word}-${index}`} style={{ '--word-progress': wordProgress }}>{word}{' '}</span>;
       })}</p>
     </div>
@@ -92,7 +92,7 @@ function FeatureShowcase() {
     ['/rewire-success-phone.png', 'Rewire successfully logged urge screen'],
   ];
   const moveMedia = (direction) => setActiveMedia(current => (current + direction + mediaSlides.length) % mediaSlides.length);
-  return <section className="section shell feature-split" id="features">
+  return <section className="section shell feature-split" id="control">
     <div className="orange-stage">
       <div className="feature-media" aria-live="polite">
         <img
@@ -121,7 +121,7 @@ function FeatureShowcase() {
 }
 
 function DistractionSection() {
-  return <section className="section shell distraction-section">
+  return <section className="section shell distraction-section" id="distract">
     <div className="section-copy">
       <h2>Distract the urge.<br/>Regain control</h2>
       <p>Redirect your attention when an urge hits. Learn through short lessons, play focus-building games, use breathing exercises, sound therapy, and emergency tools until the moment passes.</p>
@@ -133,7 +133,7 @@ function DistractionSection() {
 }
 
 function Effortless() {
-  return <section className="section shell effortless">
+  return <section className="section shell effortless" id="analytics">
     <div className="section-copy">
       <h2>Track your analytics<br/>in real-time</h2>
       <p>See your streaks, urges, triggers, and progress update as you log — so you always know what’s improving and what needs attention.</p>
