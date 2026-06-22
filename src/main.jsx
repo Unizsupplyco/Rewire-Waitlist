@@ -212,6 +212,12 @@ function Waitlist() {
       setErrorMessage('Enter a valid email address.');
       return;
     }
+    const normalizedPromoCode = promoCode.trim().toUpperCase();
+    if(normalizedPromoCode && normalizedPromoCode !== 'PRAISEFRED'){
+      setStatus('error');
+      setErrorMessage('That promo code is not valid.');
+      return;
+    }
     if(!supabase){
       setStatus('error');
       setErrorMessage('Waitlist setup is incomplete. Add the Supabase environment variables.');
@@ -219,8 +225,7 @@ function Waitlist() {
     }
     setStatus('loading');
     setErrorMessage('');
-    const normalizedPromoCode = promoCode.trim() || null;
-    const { error } = await supabase.from('waitlist').insert({ email: normalizedEmail, promo_code: normalizedPromoCode, source: 'website' });
+    const { error } = await supabase.from('waitlist').insert({ email: normalizedEmail, promo_code: normalizedPromoCode || null, source: 'website' });
     if(error && error.code !== '23505'){
       setStatus('error');
       setErrorMessage('We could not add you right now. Please try again.');
@@ -232,7 +237,7 @@ function Waitlist() {
     <div className="cta-copy"><h2>One private app.<br/>A stronger you.</h2><p>Be first to know when Rewire launches. Get early access and practical updates — never spam.</p>
       <form onSubmit={submit} noValidate>
         <label><span className="sr-only">Email address</span><input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="Email address" aria-invalid={status==='error'} /></label>
-        <label><span className="sr-only">Promo code</span><input value={promoCode} onChange={e=>setPromoCode(e.target.value)} placeholder="Promo code (optional)" maxLength={50} /></label>
+        <label><span className="sr-only">Promo code</span><input value={promoCode} onChange={e=>setPromoCode(e.target.value.toUpperCase())} placeholder="Promo code (optional)" autoCapitalize="characters" autoCorrect="off" spellCheck="false" maxLength={50} /></label>
         <button disabled={status==='loading'}>{status==='loading'?'Joining…':'Join waitlist'} <ArrowRight/></button>
         {status==='error' && <small className="error" role="alert">{errorMessage}</small>}
       </form>
