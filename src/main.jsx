@@ -156,63 +156,20 @@ const achievementBadges = [
 ];
 
 function Achievements() {
-  const wheelRef = useRef(null);
-  const [activeBadge, setActiveBadge] = useState(2);
-
-  const centerBadge = (index, behavior = 'smooth') => {
-    const wheel = wheelRef.current;
-    const item = wheel?.children[index];
-    if (!wheel || !item) return;
-    wheel.scrollTo({ left: item.offsetLeft - (wheel.clientWidth - item.clientWidth) / 2, behavior });
-    setActiveBadge(index);
-  };
-
-  useEffect(() => {
-    const frame = requestAnimationFrame(() => centerBadge(2, 'auto'));
-    return () => cancelAnimationFrame(frame);
-  }, []);
-
-  const updateActiveBadge = () => {
-    const wheel = wheelRef.current;
-    if (!wheel) return;
-    const wheelCenter = wheel.getBoundingClientRect().left + wheel.clientWidth / 2;
-    let closestIndex = 0;
-    let closestDistance = Infinity;
-    [...wheel.children].forEach((item, index) => {
-      const rect = item.getBoundingClientRect();
-      const distance = Math.abs(rect.left + rect.width / 2 - wheelCenter);
-      if (distance < closestDistance) {
-        closestDistance = distance;
-        closestIndex = index;
-      }
-    });
-    setActiveBadge(closestIndex);
-  };
-
   return <section className="achievements-section" id="achievements">
     <div className="achievements-heading shell">
       <div className="pill-label">Achievements</div>
       <h2>Unlock unique achievements</h2>
       <p>Turn every milestone into visible proof of the discipline you’re building.</p>
     </div>
-    <div className="achievement-wheel" ref={wheelRef} onScroll={updateActiveBadge} onWheel={event => {
-      if (Math.abs(event.deltaY) > Math.abs(event.deltaX)) {
-        event.preventDefault();
-        event.currentTarget.scrollLeft += event.deltaY;
-      }
-    }} aria-label="Achievement badge wheel">
-      {achievementBadges.map(([image, alt], index) => {
-        const distance = index - activeBadge;
-        const depth = Math.min(Math.abs(distance), 3);
-        return <button
-          className={index === activeBadge ? 'achievement-wheel-item active' : 'achievement-wheel-item'}
-          key={image}
-          type="button"
-          onClick={() => centerBadge(index)}
-          aria-label={`Center ${alt}`}
-          style={{ transform: `translateY(${depth * 12}px) rotateY(${distance * -9}deg) scale(${Math.max(.62, 1 - depth * .13)})`, opacity: Math.max(.34, 1 - depth * .22) }}
-        ><img src={image} alt={alt} /></button>;
-      })}
+    <div className="achievement-wheel" aria-label="Achievement badge conveyor">
+      <div className="achievement-wheel-track">
+        {[0, 1].map(group => <div className="achievement-wheel-group" aria-hidden={group === 1 ? 'true' : undefined} key={group}>
+          {achievementBadges.map(([image, alt]) => <div className="achievement-wheel-item" key={`${group}-${image}`}>
+            <img src={image} alt={group === 0 ? alt : ''} />
+          </div>)}
+        </div>)}
+      </div>
     </div>
   </section>;
 }
