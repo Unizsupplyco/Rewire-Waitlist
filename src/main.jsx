@@ -26,7 +26,7 @@ function Header() {
     <div className="nav shell">
       <Brand />
       <nav className={open ? 'nav-links open' : 'nav-links'} aria-label="Main navigation">
-        <a href="#purpose">Purpose</a><a href="#control">Control</a><a href="#distract">Distract</a><a href="#analytics">Analytics</a><a href="#how">How it works</a><a href="#stories">Stories</a>
+        <a href="#purpose">Purpose</a><a href="#control">Control</a><a href="#distract">Distract</a><a href="#analytics">Analytics</a><a href="#achievements">Achievements</a><a href="#how">How it works</a><a href="#stories">Stories</a>
       </nav>
       <a className="nav-cta" href="/#waitlist">Join waitlist</a>
       <button className="menu" onClick={() => setOpen(!open)} aria-label="Toggle navigation">{open ? <X /> : <Menu />}</button>
@@ -146,6 +146,24 @@ function Effortless() {
   </section>;
 }
 
+const achievementMilestones = ['3 days', '7 days', '14 days', '30 days', '90 days', '180 days', 'Freedom'];
+
+function Achievements() {
+  return <section className="achievements-section" id="achievements">
+    <div className="achievements-heading shell">
+      <div className="pill-label">Achievements</div>
+      <h2>Unlock unique achievements</h2>
+      <p>Turn every milestone into visible proof of the discipline you’re building.</p>
+    </div>
+    <div className="achievement-strip-wrap">
+      <div className="achievement-strip">
+        <img src="/achievement-badges.png" alt="Seven Rewire recovery milestone achievement badges" />
+        <div className="achievement-labels">{achievementMilestones.map(label => <span key={label}>{label}</span>)}</div>
+      </div>
+    </div>
+  </section>;
+}
+
 const steps = [
   ['Track your streak', 'Choose your goals and keep your clean-day progress visible.', <Sparkles/>],
   ['Block your urge', 'Use practical tools built for moments when urges feel strongest.', <Target/>],
@@ -260,7 +278,7 @@ function App(){
   const path = window.location.pathname.replace(/\/$/,'');
   if(path === '/features') return <AppFeaturesPage/>;
   if(path === '/success') return <SuccessPage/>;
-  return <><Header/><Hero/><ScrollStatement/><FeatureShowcase/><DistractionSection/><Effortless/><HowItWorks/><Testimonials/><Waitlist/><Footer/></>;
+  return <><Header/><Hero/><ScrollStatement/><FeatureShowcase/><DistractionSection/><Effortless/><Achievements/><HowItWorks/><Testimonials/><Waitlist/><Footer/></>;
 }
 
 createRoot(document.getElementById('root')).render(<App/>);
