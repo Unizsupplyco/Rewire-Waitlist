@@ -245,7 +245,7 @@ body{background:#fff;color:var(--ink)}
 
 /* Refined navigation, hero fade, and scroll story */
 .nav-links{gap:20px;margin-left:auto;margin-right:24px}.nav-links a{font-size:12px;white-space:nowrap}
-#purpose,#control,#distract,#analytics,#achievements,#how,#stories,#waitlist{scroll-margin-top:90px}
+#purpose,#control,#distract,#analytics,#achievements,#how,#stories,#faq,#waitlist{scroll-margin-top:90px}
 .hero-phone,.phone-left,.phone-secondary{-webkit-mask-image:linear-gradient(to bottom,#000 0%,#000 55%,rgba(0,0,0,.94) 63%,rgba(0,0,0,.5) 71%,transparent 81%);mask-image:linear-gradient(to bottom,#000 0%,#000 55%,rgba(0,0,0,.94) 63%,rgba(0,0,0,.5) 71%,transparent 81%)}
 .scroll-statement{min-height:165vh;margin-top:-1px;background:linear-gradient(180deg,#fff 0%,#f7fbff 13%,#eaf5ff 52%,#dceeff 100%);color:#10233d;isolation:isolate}
 .scroll-statement:before{content:'';position:absolute;z-index:-1;left:0;right:0;top:-130px;height:180px;background:linear-gradient(to bottom,rgba(255,255,255,0),rgba(255,255,255,.9) 48%,#fff 72%,#f7fbff 100%);pointer-events:none}
@@ -276,3 +276,19 @@ body{background:#fff;color:var(--ink)}
 .scroll-statement:after{display:none}
 .scroll-statement-inner:before{content:'';position:absolute;z-index:-1;inset:4% -2% 12%;opacity:.92;filter:blur(18px);pointer-events:none;background:radial-gradient(ellipse 24% 12% at 14% 25%,rgba(255,255,255,.96) 0 52%,transparent 72%),radial-gradient(ellipse 29% 14% at 31% 37%,rgba(255,255,255,.9) 0 50%,transparent 72%),radial-gradient(ellipse 26% 13% at 56% 22%,rgba(255,255,255,.94) 0 50%,transparent 73%),radial-gradient(ellipse 31% 15% at 77% 43%,rgba(255,255,255,.88) 0 51%,transparent 72%),radial-gradient(ellipse 22% 11% at 91% 24%,rgba(255,255,255,.9) 0 49%,transparent 72%)}
 @media(max-width:800px){.scroll-statement-inner:before{inset:5% -18% 15%;opacity:.82}}
+
+/* FAQ */
+.faq-section{padding:28px 0 82px}
+.faq-heading{text-align:center;margin:0 auto 24px;max-width:680px}
+.faq-heading h2{font:800 clamp(30px,4vw,48px)/1.08 'Manrope',sans-serif;letter-spacing:-2px;color:#10233d;margin:16px 0 10px}
+.faq-heading p{margin:0 auto;color:#63758b;font-size:13px;line-height:1.6;max-width:560px}
+.faq-list{width:min(820px,100%);margin:0 auto;border:1px solid rgba(123,184,255,.34);border-radius:26px;background:linear-gradient(180deg,rgba(255,255,255,.86),rgba(234,245,255,.7));box-shadow:0 24px 60px rgba(32,91,145,.12);overflow:hidden;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.faq-item{border-bottom:1px solid rgba(123,184,255,.22)}
+.faq-item:last-child{border-bottom:0}
+.faq-item summary{list-style:none;cursor:pointer;position:relative;padding:18px 58px 18px 22px;font:800 14px/1.35 'Manrope',sans-serif;color:#10233d}
+.faq-item summary::-webkit-details-marker{display:none}
+.faq-item summary:after{content:'+';position:absolute;right:21px;top:50%;width:26px;height:26px;border-radius:50%;transform:translateY(-50%);display:grid;place-items:center;color:#419fff;background:rgba(65,159,255,.1);font:400 20px/1 'Manrope',sans-serif;transition:transform .22s ease,background .22s ease,color .22s ease}
+.faq-item[open] summary:after{content:'−';background:linear-gradient(135deg,#419fff,#7bb8ff);color:#fff;transform:translateY(-50%) rotate(180deg)}
+.faq-item p{margin:0;padding:0 58px 19px 22px;color:#63758b;font-size:12.5px;line-height:1.7;max-width:720px}
+@media(max-width:960px) and (min-width:801px){.nav-links{gap:10px}.nav-links a{font-size:10.5px}.nav-cta{font-size:11px;padding-inline:11px}}
+@media(max-width:800px){.faq-section{padding:18px 0 65px}.faq-list{border-radius:22px}.faq-item summary{padding:17px 52px 17px 18px;font-size:13px}.faq-item p{padding:0 50px 18px 18px;font-size:12px}}

@@ -27,7 +27,7 @@ function Header() {
     <div className="nav shell">
       <Brand />
       <nav className={open ? 'nav-links open' : 'nav-links'} aria-label="Main navigation">
-        <a href="#purpose">Purpose</a><a href="#control">Control</a><a href="#distract">Distract</a><a href="#analytics">Analytics</a><a href="#achievements">Achievements</a><a href="#how">How it works</a><a href="#stories">Stories</a>
+        <a href="#purpose">Purpose</a><a href="#control">Control</a><a href="#distract">Distract</a><a href="#analytics">Analytics</a><a href="#achievements">Achievements</a><a href="#how">How it works</a><a href="#stories">Stories</a><a href="#faq">FAQ</a>
       </nav>
       <a className="nav-cta" href="/#waitlist">Join waitlist</a>
       <button className="menu" onClick={() => setOpen(!open)} aria-label="Toggle navigation">{open ? <X /> : <Menu />}</button>
@@ -254,6 +254,35 @@ function Testimonials() {
   </section>;
 }
 
+const faqs = [
+  ['What is REWIRE?', 'REWIRE is a private self-control app that helps you track clean streaks, log urges, understand triggers, and choose healthier responses in the moment.'],
+  ['Is REWIRE free?', 'REWIRE is currently in waitlist mode. Early access details and launch pricing will be shared with people who join the waitlist first.'],
+  ['How do I access REWIRE?', 'Join the waitlist with your email address. When early access opens, you will receive the next steps directly by email.'],
+  ['What features does REWIRE include?', 'REWIRE includes urge logging, streak tracking, trigger awareness, analytics, emergency tools, distraction games, breathing resets, and progress milestones.'],
+  ['What does the urge button do?', 'The urge button gives you a fast way to log an urge, identify what caused it, and choose a positive response before the cycle takes over.'],
+  ['How does REWIRE track progress?', 'REWIRE turns your clean days, logged urges, triggers, responses, and daily missions into simple analytics so you can see what is improving.'],
+  ['How does the achievement system work?', 'Achievements mark consistency milestones such as 7 days, 14 days, 1 month, and longer streaks so progress feels visible and rewarding.'],
+  ['Is REWIRE private?', 'Yes. The landing page waitlist only collects your email and optional approved promo code. The product is designed around private, practical recovery support.']
+];
+
+function FAQ() {
+  return <section className="faq-section shell" id="faq">
+    <div className="faq-heading">
+      <div className="pill-label">FAQ</div>
+      <h2>Frequently asked questions</h2>
+      <p>Quick answers about REWIRE, early access, privacy, and how the app helps you rebuild control.</p>
+    </div>
+    <div className="faq-list">
+      {faqs.map(([question, answer]) =>
+        <details className="faq-item" key={question}>
+          <summary>{question}</summary>
+          <p>{answer}</p>
+        </details>
+      )}
+    </div>
+  </section>;
+}
+
 function Waitlist() {
   const [email,setEmail]=useState('');
   const [promoCode,setPromoCode]=useState('');
@@ -338,7 +367,7 @@ function App(){
   const path = window.location.pathname.replace(/\/$/,'');
   if(path === '/features') return <AppFeaturesPage/>;
   if(path === '/success') return <SuccessPage/>;
-  return <><Header/><Hero/><ScrollStatement/><FeatureShowcase/><DistractionSection/><Effortless/><Achievements/><HowItWorks/><Testimonials/><Waitlist/><Footer/></>;
+  return <><Header/><Hero/><ScrollStatement/><FeatureShowcase/><DistractionSection/><Effortless/><Achievements/><HowItWorks/><Testimonials/><FAQ/><Waitlist/><Footer/></>;
 }
 
 createRoot(document.getElementById('root')).render(<><App/><Analytics/></>);
