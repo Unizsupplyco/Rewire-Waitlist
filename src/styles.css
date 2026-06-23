@@ -229,14 +229,16 @@ body{background:#fff;color:var(--ink)}
 /* Waitlist form and success route */
 .cta form{grid-template-columns:minmax(190px,1fr) minmax(135px,.65fr) auto;max-width:650px;gap:10px}
 .cta form label{min-width:0}.cta input{width:100%;height:48px;border-radius:999px;padding:0 20px;font-size:13px;outline:0;box-shadow:0 8px 20px rgba(32,94,153,.12)}
+.cta .promo-input::placeholder{font-size:11px}
 .cta input:focus{box-shadow:0 0 0 3px rgba(255,255,255,.38),0 8px 20px rgba(32,94,153,.15)}
 .cta form button{height:48px;border-radius:999px;padding:0 21px;white-space:nowrap;cursor:pointer}.cta form button:disabled{opacity:.65;cursor:wait}
-.cta .error{top:54px;left:20px}
+.cta .error{grid-column:1/-1;position:static;margin:2px 0 0 16px;color:#ff244f;background:rgba(255,255,255,.92);border:1px solid rgba(255,255,255,.8);border-radius:999px;padding:7px 12px;width:max-content;max-width:calc(100% - 16px);font:800 12px/1.25 'Manrope',sans-serif;box-shadow:0 10px 24px rgba(99,21,44,.12)}
+.privacy{margin-top:16px}
 .success-page{min-height:100vh;background:radial-gradient(circle at 50% 30%,#fff 0,#eaf5ff 48%,#d8ebff 100%);display:flex;align-items:center;justify-content:center;padding:110px 24px 40px}
 .success-panel{width:min(560px,100%);background:rgba(255,255,255,.82);border:1px solid rgba(255,255,255,.9);border-radius:30px;padding:56px 45px;text-align:center;box-shadow:0 25px 70px rgba(34,91,145,.15);backdrop-filter:blur(15px)}
 .success-icon{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#419fff,#8cc5ff);color:#fff;margin:0 auto 18px;box-shadow:0 14px 30px rgba(65,159,255,.28)}.success-icon svg{width:34px;height:34px}
 .success-panel h1{font:800 42px/1.1 'Manrope',sans-serif;letter-spacing:-1.8px;margin:18px 0 10px}.success-panel p{color:var(--muted);font-size:14px;line-height:1.65;margin:0 auto;max-width:410px}.success-panel>a{display:inline-flex;align-items:center;gap:8px;margin-top:28px;padding:12px 20px;border-radius:999px;background:#10233d;color:#fff;text-decoration:none;font-size:12px;font-weight:700}.success-panel>a svg{width:15px}
-@media(max-width:800px){.cta form{grid-template-columns:1fr}.cta form button{padding:0 16px;justify-content:center}.cta input{padding:0 16px}.cta .error{grid-column:1/-1;position:static;padding-left:8px}.success-panel{padding:45px 24px}.success-panel h1{font-size:35px}}
+@media(max-width:800px){.cta form{grid-template-columns:1fr}.cta form button{padding:0 16px;justify-content:center}.cta input{padding:0 16px}.cta .error{grid-column:1/-1;position:static;margin:0;width:100%;max-width:100%;border-radius:16px;padding:9px 12px;text-align:center}.success-panel{padding:45px 24px}.success-panel h1{font-size:35px}}
 
 /* Softer hero side phones */
 .phones-ready .phone-left,.phones-ready .phone-secondary{opacity:1}
