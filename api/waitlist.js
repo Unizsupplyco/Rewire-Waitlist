@@ -1,5 +1,9 @@
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+function cleanEnv(value) {
+  return String(value || '').replace(/^\uFEFF/, '').trim();
+}
+
 function sendJson(response, status, body) {
   response.statusCode = status;
   response.setHeader('Content-Type', 'application/json');
@@ -18,8 +22,8 @@ export default async function handler(request, response) {
     return;
   }
 
-  const supabaseUrl = process.env.VITE_SUPABASE_URL;
-  const supabaseKey = process.env.VITE_SUPABASE_PUBLISHABLE_KEY || process.env.VITE_SUPABASE_ANON_KEY;
+  const supabaseUrl = cleanEnv(process.env.VITE_SUPABASE_URL);
+  const supabaseKey = cleanEnv(process.env.VITE_SUPABASE_PUBLISHABLE_KEY || process.env.VITE_SUPABASE_ANON_KEY);
 
   if (!supabaseUrl || !supabaseKey) {
     sendJson(response, 500, { error: 'Waitlist setup is incomplete.' });
@@ -75,7 +79,8 @@ export default async function handler(request, response) {
     }
 
     sendJson(response, 200, { ok: true });
-  } catch {
+  } catch (error) {
+    console.error('Waitlist Supabase request failed', error);
     sendJson(response, 502, { error: 'Waitlist service is unavailable. Please try again.' });
   }
 }
