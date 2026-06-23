@@ -82,6 +82,7 @@ function Hero() {
         <div className="hero-copy">
           <h1>Quit Porn.<br/>Rebuild Discipline.<br/><span>Starting Today</span></h1>
           <p>Build better habits, take your control back<br className="desktop"/> and rebuild discipline <strong>one day at a time.</strong></p>
+          <div className="hero-proof">Join 50+ other people</div>
           <form className="hero-waitlist" onSubmit={submit} noValidate>
             <label>
               <span className="sr-only">Email address</span>
@@ -94,9 +95,9 @@ function Hero() {
             <img src="/store-badges.png" alt="Coming soon on Google Play and the App Store" />
           </a>
           <div className="hero-socials" aria-label="Social links">
-            <a href="#" aria-label="Instagram"><span className="social-mark">IG</span>Instagram</a>
-            <a href="#" aria-label="X"><span className="social-mark">X</span>X</a>
-            <a href="#" aria-label="YouTube"><span className="social-mark">YT</span>YouTube</a>
+            <a className="tiktok-link" href="https://www.tiktok.com/@rewire.app0" aria-label="Follow Rewire on TikTok">
+              <img src="/tiktok-icon.png" alt="" />
+            </a>
           </div>
         </div>
         <div className={phoneLoaded ? 'hero-device-wrap phone-ready' : 'hero-device-wrap'}>

@@ -318,7 +318,8 @@ body{background:#fff;color:var(--ink)}
 .hero-copy h1 span{color:#419fff}
 .hero-copy p{max-width:500px;margin:0;color:#63758b;font-size:16px;line-height:1.65}
 .hero-copy p strong{color:#419fff;font-weight:800}
-.hero-waitlist{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:7px;width:min(100%,530px);margin-top:30px;padding:7px;border:1px solid rgba(123,184,255,.35);border-radius:999px;background:rgba(255,255,255,.9);box-shadow:0 20px 50px rgba(32,91,145,.14);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.hero-proof{display:inline-flex;align-items:center;height:42px;margin-top:25px;padding:0 18px;border:1px solid rgba(123,184,255,.28);border-radius:999px;background:rgba(255,255,255,.9);color:#21436a;font:800 13px 'Manrope',sans-serif;box-shadow:0 14px 32px rgba(32,91,145,.1);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.hero-waitlist{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:7px;width:min(100%,530px);margin-top:14px;padding:7px;border:1px solid rgba(123,184,255,.35);border-radius:999px;background:rgba(255,255,255,.9);box-shadow:0 20px 50px rgba(32,91,145,.14);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
 .hero-waitlist label{min-width:0}
 .hero-waitlist input{width:100%;min-width:0;height:52px;border:0;outline:0;background:transparent;padding:0 18px;color:#10233d;font:600 14px 'DM Sans',Arial,sans-serif}
 .hero-waitlist input::placeholder{color:#8aa0b8}
@@ -329,8 +330,9 @@ body{background:#fff;color:var(--ink)}
 .hero-store-row{display:block;width:340px;max-width:100%;margin:18px 0 0;text-decoration:none}
 .hero-store-row img{display:block;width:100%;height:auto;object-fit:contain}
 .hero-socials{width:100%;display:flex;flex-wrap:wrap;gap:10px;margin-top:17px}
-.hero-socials a{height:42px;display:inline-flex;align-items:center;gap:8px;padding:0 15px;border:1px solid rgba(123,184,255,.34);border-radius:999px;background:rgba(255,255,255,.72);color:#21436a;text-decoration:none;font:800 12px 'Manrope',sans-serif;box-shadow:0 10px 25px rgba(32,91,145,.08);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
-.hero-socials .social-mark{width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:rgba(65,159,255,.12);color:#419fff;font:800 10px 'Manrope',sans-serif}
+.hero-socials .tiktok-link{width:54px;height:54px;display:grid;place-items:center;border:1px solid rgba(123,184,255,.34);border-radius:50%;background:#fff;text-decoration:none;box-shadow:0 10px 25px rgba(32,91,145,.1);transition:transform .2s ease,box-shadow .2s ease}
+.hero-socials .tiktok-link:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(32,91,145,.16)}
+.hero-socials .tiktok-link img{width:38px;height:38px;object-fit:contain;display:block}
 .hero-device-wrap{position:relative;min-width:0;min-height:560px;display:flex;align-items:center;justify-content:flex-end;isolation:isolate}
 .hero-device-wrap:before{content:'';position:absolute;z-index:-1;right:-11%;top:11%;width:min(620px,58vw);height:min(510px,48vw);border-radius:50%;background:radial-gradient(ellipse,rgba(255,255,255,.96) 0%,rgba(221,237,255,.74) 47%,rgba(65,159,255,.13) 72%,transparent 100%);filter:blur(10px)}
 .hero-device-wrap img{display:block;width:clamp(430px,48vw,630px);height:auto;max-width:none;object-fit:contain;opacity:0;transform:translate(28px,24px) scale(.96);filter:drop-shadow(0 26px 34px rgba(35,88,139,.16));transition:opacity .72s ease,transform .82s cubic-bezier(.18,.8,.25,1)}
@@ -342,7 +344,8 @@ body{background:#fff;color:var(--ink)}
   .hero-copy{max-width:650px;margin:0 auto}
   .hero-copy h1{font-size:clamp(42px,9vw,58px);letter-spacing:-2.4px}
   .hero-copy p{margin-inline:auto;font-size:14px}
-  .hero-waitlist{margin:26px auto 0}
+  .hero-proof{margin-top:22px}
+  .hero-waitlist{margin:14px auto 0}
   .hero-store-row{margin:17px auto 0;width:330px}
   .hero-socials{justify-content:center}
   .hero-device-wrap{min-height:390px;justify-content:center}
@@ -359,7 +362,8 @@ body{background:#fff;color:var(--ink)}
   .hero-waitlist button{height:48px;width:100%}
   .hero-error{margin:0 4px 6px;text-align:center}
   .hero-store-row{width:min(310px,100%)}
-  .hero-socials a{height:40px;padding:0 13px}
+  .hero-socials .tiktok-link{width:52px;height:52px}
+  .hero-socials .tiktok-link img{width:36px;height:36px}
   .hero-device-wrap{min-height:315px}
   .hero-device-wrap img{width:100%;max-width:420px}
 }
