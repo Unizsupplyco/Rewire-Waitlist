@@ -295,3 +295,17 @@ body{background:#fff;color:var(--ink)}
 .faq-item p{margin:0;padding:0 58px 19px 22px;color:#63758b;font-size:12.5px;line-height:1.7;max-width:720px}
 @media(max-width:960px) and (min-width:801px){.nav-links{gap:10px}.nav-links a{font-size:10.5px}.nav-cta{font-size:11px;padding-inline:11px}}
 @media(max-width:800px){.faq-section{padding:18px 0 65px}.faq-list{border-radius:22px}.faq-item summary{padding:17px 52px 17px 18px;font-size:13px}.faq-item p{padding:0 50px 18px 18px;font-size:12px}}
+
+/* Privacy policy page */
+.policy-page{min-height:100vh;background:linear-gradient(180deg,#eaf5ff 0,#f8fbff 360px,#fff 100%)}
+.policy-main{padding:140px 0 95px}
+.policy-hero{text-align:center;max-width:760px;margin:0 auto 34px}
+.policy-hero h1{font:800 clamp(42px,6vw,72px)/.98 'Manrope',sans-serif;letter-spacing:-3px;color:#10233d;margin:18px 0 12px}
+.policy-hero p{margin:0;color:#63758b;font-size:15px;line-height:1.65}
+.policy-card{width:min(920px,100%);margin:0 auto;background:rgba(255,255,255,.88);border:1px solid rgba(123,184,255,.28);border-radius:32px;padding:46px 54px;box-shadow:0 28px 70px rgba(32,91,145,.12);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.policy-card h2{font:800 24px/1.22 'Manrope',sans-serif;letter-spacing:-.7px;color:#10233d;margin:38px 0 12px;padding-top:18px;border-top:1px solid rgba(123,184,255,.22)}
+.policy-card h2:first-child{margin-top:0;padding-top:0;border-top:0}
+.policy-card p,.policy-card li{font-size:14px;line-height:1.78;color:#5f7085;margin:0 0 14px}
+.policy-card strong{color:#10233d;font-weight:800}.policy-card a{color:#419fff;font-weight:800;text-decoration:none}.policy-card a:hover{text-decoration:underline}
+.policy-card ul{margin:0 0 8px 22px;padding:0}.policy-card li{padding-left:4px}
+@media(max-width:800px){.policy-main{padding:115px 0 70px}.policy-hero h1{letter-spacing:-2.2px}.policy-card{padding:30px 22px;border-radius:24px}.policy-card h2{font-size:20px}.policy-card p,.policy-card li{font-size:13px;line-height:1.72}}

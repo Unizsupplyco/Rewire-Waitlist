@@ -282,6 +282,54 @@ function FAQ() {
   </section>;
 }
 
+function formatInlinePolicyText(text) {
+  const parts = text.split(/(\*\*[^*]+\*\*|\[[^\]]+\]\([^)]+\))/g);
+  return parts.map((part, index) => {
+    const bold = part.match(/^\*\*([^*]+)\*\*$/);
+    if (bold) return <strong key={index}>{bold[1]}</strong>;
+    const link = part.match(/^\[([^\]]+)\]\(([^)]+)\)$/);
+    if (link) return <a key={index} href={link[2]}>{link[1]}</a>;
+    return part;
+  });
+}
+
+function PrivacyPolicyPage() {
+  const [content, setContent] = useState('');
+
+  useEffect(() => {
+    fetch('/privacy-policy.md')
+      .then(response => response.text())
+      .then(setContent)
+      .catch(() => setContent(''));
+  }, []);
+
+  const lines = content
+    .replace(/^# Privacy Policy for Rewire\s*/i, '')
+    .split(/\r?\n/)
+    .map(line => line.trim())
+    .filter(Boolean);
+
+  return <div className="policy-page" id="top">
+    <Header />
+    <main className="policy-main shell">
+      <div className="policy-hero">
+        <div className="pill-label">Legal</div>
+        <h1>Privacy Policy</h1>
+        <p>How Rewire handles your information, privacy, and data rights.</p>
+      </div>
+      <article className="policy-card">
+        {lines.map((line, index) => {
+          if (line.startsWith('## ')) return <h2 key={index}>{line.replace(/^##\s+/, '')}</h2>;
+          if (line.startsWith('# ')) return null;
+          if (line.startsWith('* ')) return <ul key={index}><li>{formatInlinePolicyText(line.replace(/^\*\s+/, ''))}</li></ul>;
+          return <p key={index}>{formatInlinePolicyText(line)}</p>;
+        })}
+      </article>
+    </main>
+    <Footer />
+  </div>;
+}
+
 function Waitlist() {
   const [email,setEmail]=useState('');
   const [promoCode,setPromoCode]=useState('');
@@ -336,13 +384,13 @@ function Waitlist() {
         <button disabled={status==='loading'}>{status==='loading'?'Joining…':'Join waitlist'} <ArrowRight/></button>
         {status==='error' && <small className="error" role="alert">{errorMessage}</small>}
       </form>
-      <div className="privacy"><ShieldCheck/> Private by design. <a href="/privacy-policy-rewire.pdf" target="_blank" rel="noreferrer">Privacy policy</a>. Unsubscribe anytime.</div>
+      <div className="privacy"><ShieldCheck/> Private by design. <a href="/privacy-policy">Privacy policy</a>. Unsubscribe anytime.</div>
     </div>
     <div className="cta-phone"><img className="cta-device-art" src="/cta-two-phones.png" alt="Rewire streak and distraction games app screens"/></div>
   </section>;
 }
 
-function Footer() { return <footer id="privacy"><div className="shell footer-grid"><div><Brand/><p>Private tools for breaking cycles,<br/>beating urges, and rebuilding discipline.</p><div className="socials"><span>●</span><span>●</span><span>●</span></div></div><div><b>Product</b><a href="#features">Features</a><a href="#how">How it works</a><a href="#waitlist">Waitlist</a></div><div><b>Company</b><a href="#stories">Stories</a><a href="#">About</a><a href="#">Contact</a></div><div><b>Legal</b><a href="/privacy-policy-rewire.pdf" target="_blank" rel="noreferrer">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></div></div><div className="shell footer-bottom"><span>© 2026 Rewire. All rights reserved.</span><span>Made for better days.</span></div></footer>; }
+function Footer() { return <footer id="privacy"><div className="shell footer-grid"><div><Brand/><p>Private tools for breaking cycles,<br/>beating urges, and rebuilding discipline.</p><div className="socials"><span>●</span><span>●</span><span>●</span></div></div><div><b>Product</b><a href="#features">Features</a><a href="#how">How it works</a><a href="#waitlist">Waitlist</a></div><div><b>Company</b><a href="#stories">Stories</a><a href="#">About</a><a href="#">Contact</a></div><div><b>Legal</b><a href="/privacy-policy">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></div></div><div className="shell footer-bottom"><span>© 2026 Rewire. All rights reserved.</span><span>Made for better days.</span></div></footer>; }
 
 const appFeatures = [
   ['Block the urge', 'Interrupt the moment immediately, then choose a positive response before the urge takes control.', '/feature-block-urge.png'],
@@ -377,6 +425,7 @@ function SuccessPage(){
 function App(){
   const path = window.location.pathname.replace(/\/$/,'');
   if(path === '/features') return <AppFeaturesPage/>;
+  if(path === '/privacy-policy') return <PrivacyPolicyPage/>;
   if(path === '/success') return <SuccessPage/>;
   return <><Header/><Hero/><ScrollStatement/><FeatureShowcase/><DistractionSection/><Effortless/><Achievements/><HowItWorks/><Testimonials/><FAQ/><Waitlist/><Footer/></>;
 }
