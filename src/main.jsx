@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import './styles.css';
 
-const PHONE = '/rewire-phone-transparent.png';
+const HERO_PHONES = '/hero-phone-trio-transparent.png';
 
 function Brand() {
   return <a className="brand" href="/" aria-label="Rewire home">REWIRE</a>;
@@ -35,19 +35,73 @@ function Header() {
 }
 
 function Hero() {
-  const [loadedPhones, setLoadedPhones] = useState([]);
-  const markPhoneLoaded = (phone) => setLoadedPhones(current => current.includes(phone) ? current : [...current, phone]);
+  const [email, setEmail] = useState('');
+  const [status, setStatus] = useState('idle');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [phoneLoaded, setPhoneLoaded] = useState(false);
+
+  async function submit(e) {
+    e.preventDefault();
+    const normalizedEmail = email.trim().toLowerCase();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail)) {
+      setStatus('error');
+      setErrorMessage('Enter a valid email address.');
+      return;
+    }
+    setStatus('loading');
+    setErrorMessage('');
+    let response;
+    let resultText = '';
+    try {
+      response = await fetch('/api/waitlist', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email: normalizedEmail, promoCode: '' })
+      });
+      resultText = await response.text();
+    } catch {
+      setStatus('error');
+      setErrorMessage('Network error. Please check your connection and try again.');
+      return;
+    }
+    let result = null;
+    try { result = resultText ? JSON.parse(resultText) : null; } catch {}
+    if (!response.ok) {
+      setStatus('error');
+      setErrorMessage(result?.error || 'We could not add you right now. Please try again.');
+      return;
+    }
+    window.location.assign('/success');
+  }
+
   return <main>
-    <section className="hero shell">
-      <h1>Your Trusted Partner<br/>for <span>Breaking the Cycle</span></h1>
-      <p>Build better habits, take your control back<br className="desktop"/> and rebuild discipline — <strong>one day at a time.</strong></p>
-      <a className="store-row" href="#waitlist" aria-label="Join the Rewire launch waitlist">
-        <img src="/store-badges.png" alt="Coming soon on Google Play and the App Store" />
-      </a>
-      <div className={loadedPhones.length === 3 ? 'hero-art phones-ready' : 'hero-art'}>
-        <img className="phone-left" src="/distraction-games-phone.png" onLoad={() => markPhoneLoaded('left')} alt="Rewire distraction games screen" />
-        <img className="phone-secondary" src="/rewire-success-phone.png" onLoad={() => markPhoneLoaded('right')} alt="Rewire successfully logged screen" />
-        <img className="hero-phone main-phone" src={PHONE} onLoad={() => markPhoneLoaded('main')} alt="Rewire app clean streak screen" />
+    <section className="hero">
+      <div className="hero-inner shell">
+        <div className="hero-copy">
+          <h1>Quit Porn.<br/>Rebuild Discipline.<br/><span>Starting Today</span></h1>
+          <p>Build better habits, take your control back<br className="desktop"/> and rebuild discipline <strong>one day at a time.</strong></p>
+          <form className="hero-waitlist" onSubmit={submit} noValidate>
+            <label>
+              <span className="sr-only">Email address</span>
+              <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Enter your email" aria-invalid={status === 'error'} />
+            </label>
+            <button type="submit" disabled={status === 'loading'}>{status === 'loading' ? 'Sending...' : 'Get notified'} <ArrowRight /></button>
+            {status === 'error' && <small className="hero-error" role="alert">{errorMessage}</small>}
+          </form>
+          <a className="hero-store-row" href="#waitlist" aria-label="Join the Rewire launch waitlist">
+            <img src="/store-badges.png" alt="Coming soon on Google Play and the App Store" />
+          </a>
+          <div className="hero-socials" aria-label="Social links">
+            <a href="#" aria-label="Instagram"><span className="social-mark">IG</span>Instagram</a>
+            <a href="#" aria-label="X"><span className="social-mark">X</span>X</a>
+            <a href="#" aria-label="YouTube"><span className="social-mark">YT</span>YouTube</a>
+          </div>
+        </div>
+        <div className={phoneLoaded ? 'hero-device-wrap phone-ready' : 'hero-device-wrap'}>
+          <img src={HERO_PHONES} onLoad={() => setPhoneLoaded(true)} alt="Rewire app screens on three iPhones" />
+        </div>
       </div>
     </section>
   </main>;
