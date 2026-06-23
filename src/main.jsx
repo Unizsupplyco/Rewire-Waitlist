@@ -6,7 +6,6 @@ import {
   Menu, ShieldCheck, Sparkles, Target, TimerReset, TrendingUp, X
 } from 'lucide-react';
 import './styles.css';
-import { supabaseKey, supabaseUrl } from './supabase';
 
 const PHONE = '/rewire-phone-transparent.png';
 
@@ -302,25 +301,17 @@ function Waitlist() {
       setErrorMessage('That promo code is not valid.');
       return;
     }
-    if(!supabaseUrl || !supabaseKey){
-      setStatus('error');
-      setErrorMessage('Waitlist setup is incomplete. Add the Supabase environment variables.');
-      return;
-    }
     setStatus('loading');
     setErrorMessage('');
     let response;
     let resultText = '';
     try {
-      response = await fetch(`${supabaseUrl}/rest/v1/waitlist`, {
+      response = await fetch('/api/waitlist', {
         method: 'POST',
         headers: {
-          apikey: supabaseKey,
-          Authorization: `Bearer ${supabaseKey}`,
-          'Content-Type': 'application/json',
-          Prefer: 'return=minimal'
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ email: normalizedEmail, promo_code: normalizedPromoCode || null, source: 'website' })
+        body: JSON.stringify({ email: normalizedEmail, promoCode: normalizedPromoCode || '' })
       });
       resultText = await response.text();
     } catch {
@@ -330,13 +321,9 @@ function Waitlist() {
     }
     let result = null;
     try { result = resultText ? JSON.parse(resultText) : null; } catch {}
-    if(response.status === 409 && result?.code === '23505'){
-      window.location.assign('/success');
-      return;
-    }
     if(!response.ok){
       setStatus('error');
-      setErrorMessage(result?.message ? `Waitlist error: ${result.message}` : 'We could not add you right now. Please try again.');
+      setErrorMessage(result?.error || 'We could not add you right now. Please try again.');
       return;
     }
     window.location.assign('/success');
@@ -349,13 +336,13 @@ function Waitlist() {
         <button disabled={status==='loading'}>{status==='loading'?'Joining…':'Join waitlist'} <ArrowRight/></button>
         {status==='error' && <small className="error" role="alert">{errorMessage}</small>}
       </form>
-      <div className="privacy"><ShieldCheck/> Private by design. Unsubscribe anytime.</div>
+      <div className="privacy"><ShieldCheck/> Private by design. <a href="/privacy-policy-rewire.pdf" target="_blank" rel="noreferrer">Privacy policy</a>. Unsubscribe anytime.</div>
     </div>
     <div className="cta-phone"><img className="cta-device-art" src="/cta-two-phones.png" alt="Rewire streak and distraction games app screens"/></div>
   </section>;
 }
 
-function Footer() { return <footer id="privacy"><div className="shell footer-grid"><div><Brand/><p>Private tools for breaking cycles,<br/>beating urges, and rebuilding discipline.</p><div className="socials"><span>●</span><span>●</span><span>●</span></div></div><div><b>Product</b><a href="#features">Features</a><a href="#how">How it works</a><a href="#waitlist">Waitlist</a></div><div><b>Company</b><a href="#stories">Stories</a><a href="#">About</a><a href="#">Contact</a></div><div><b>Legal</b><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></div></div><div className="shell footer-bottom"><span>© 2026 Rewire. All rights reserved.</span><span>Made for better days.</span></div></footer>; }
+function Footer() { return <footer id="privacy"><div className="shell footer-grid"><div><Brand/><p>Private tools for breaking cycles,<br/>beating urges, and rebuilding discipline.</p><div className="socials"><span>●</span><span>●</span><span>●</span></div></div><div><b>Product</b><a href="#features">Features</a><a href="#how">How it works</a><a href="#waitlist">Waitlist</a></div><div><b>Company</b><a href="#stories">Stories</a><a href="#">About</a><a href="#">Contact</a></div><div><b>Legal</b><a href="/privacy-policy-rewire.pdf" target="_blank" rel="noreferrer">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></div></div><div className="shell footer-bottom"><span>© 2026 Rewire. All rights reserved.</span><span>Made for better days.</span></div></footer>; }
 
 const appFeatures = [
   ['Block the urge', 'Interrupt the moment immediately, then choose a positive response before the urge takes control.', '/feature-block-urge.png'],

@@ -234,6 +234,7 @@ body{background:#fff;color:var(--ink)}
 .cta form button{height:48px;border-radius:999px;padding:0 21px;white-space:nowrap;cursor:pointer}.cta form button:disabled{opacity:.65;cursor:wait}
 .cta .error{grid-column:1/-1;position:static;margin:2px 0 0 16px;color:#ff244f;background:rgba(255,255,255,.92);border:1px solid rgba(255,255,255,.8);border-radius:999px;padding:7px 12px;width:max-content;max-width:calc(100% - 16px);font:800 12px/1.25 'Manrope',sans-serif;box-shadow:0 10px 24px rgba(99,21,44,.12)}
 .privacy{margin-top:16px}
+.privacy a{color:#fff;text-decoration:underline;text-underline-offset:2px;font-weight:800}
 .success-page{min-height:100vh;background:radial-gradient(circle at 50% 30%,#fff 0,#eaf5ff 48%,#d8ebff 100%);display:flex;align-items:center;justify-content:center;padding:110px 24px 40px}
 .success-panel{width:min(560px,100%);background:rgba(255,255,255,.82);border:1px solid rgba(255,255,255,.9);border-radius:30px;padding:56px 45px;text-align:center;box-shadow:0 25px 70px rgba(34,91,145,.15);backdrop-filter:blur(15px)}
 .success-icon{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;background:linear-gradient(135deg,#419fff,#8cc5ff);color:#fff;margin:0 auto 18px;box-shadow:0 14px 30px rgba(65,159,255,.28)}.success-icon svg{width:34px;height:34px}
