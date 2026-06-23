@@ -27,7 +27,7 @@ function Header() {
     <div className="nav shell">
       <Brand />
       <nav className={open ? 'nav-links open' : 'nav-links'} aria-label="Main navigation">
-        <a href="#purpose">Purpose</a><a href="#control">Control</a><a href="#distract">Distract</a><a href="#analytics">Analytics</a><a href="#achievements">Achievements</a><a href="#how">How it works</a><a href="#stories">Stories</a><a href="#faq">FAQ</a>
+        <a href="#achievements">Achievements</a><a href="#how">How it works</a><a href="#stories">Stories</a><a href="#faq">FAQ</a>
       </nav>
       <a className="nav-cta" href="/#waitlist">Join waitlist</a>
       <button className="menu" onClick={() => setOpen(!open)} aria-label="Toggle navigation">{open ? <X /> : <Menu />}</button>
