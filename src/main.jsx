@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
+import { Analytics } from '@vercel/analytics/react';
 import {
   ArrowRight, Check, ChevronLeft, ChevronRight, CircleCheck, Flame, Heart, LockKeyhole,
   Menu, ShieldCheck, Sparkles, Target, TimerReset, TrendingUp, X
@@ -340,4 +341,4 @@ function App(){
   return <><Header/><Hero/><ScrollStatement/><FeatureShowcase/><DistractionSection/><Effortless/><Achievements/><HowItWorks/><Testimonials/><Waitlist/><Footer/></>;
 }
 
-createRoot(document.getElementById('root')).render(<App/>);
+createRoot(document.getElementById('root')).render(<><App/><Analytics/></>);
