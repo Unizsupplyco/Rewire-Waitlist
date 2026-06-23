@@ -6,7 +6,7 @@ import {
   Menu, ShieldCheck, Sparkles, Target, TimerReset, TrendingUp, X
 } from 'lucide-react';
 import './styles.css';
-import { supabase } from './supabase';
+import { supabaseKey, supabaseUrl } from './supabase';
 
 const PHONE = '/rewire-phone-transparent.png';
 
@@ -302,17 +302,41 @@ function Waitlist() {
       setErrorMessage('That promo code is not valid.');
       return;
     }
-    if(!supabase){
+    if(!supabaseUrl || !supabaseKey){
       setStatus('error');
       setErrorMessage('Waitlist setup is incomplete. Add the Supabase environment variables.');
       return;
     }
     setStatus('loading');
     setErrorMessage('');
-    const { error } = await supabase.from('waitlist').insert({ email: normalizedEmail, promo_code: normalizedPromoCode || null, source: 'website' });
-    if(error && error.code !== '23505'){
+    let response;
+    let resultText = '';
+    try {
+      response = await fetch(`${supabaseUrl}/rest/v1/waitlist`, {
+        method: 'POST',
+        headers: {
+          apikey: supabaseKey,
+          Authorization: `Bearer ${supabaseKey}`,
+          'Content-Type': 'application/json',
+          Prefer: 'return=minimal'
+        },
+        body: JSON.stringify({ email: normalizedEmail, promo_code: normalizedPromoCode || null, source: 'website' })
+      });
+      resultText = await response.text();
+    } catch {
       setStatus('error');
-      setErrorMessage('We could not add you right now. Please try again.');
+      setErrorMessage('Network error. Please check your connection and try again.');
+      return;
+    }
+    let result = null;
+    try { result = resultText ? JSON.parse(resultText) : null; } catch {}
+    if(response.status === 409 && result?.code === '23505'){
+      window.location.assign('/success');
+      return;
+    }
+    if(!response.ok){
+      setStatus('error');
+      setErrorMessage(result?.message ? `Waitlist error: ${result.message}` : 'We could not add you right now. Please try again.');
       return;
     }
     window.location.assign('/success');
