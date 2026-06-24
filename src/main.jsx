@@ -102,6 +102,7 @@ function Hero() {
           <div className="hero-socials" aria-label="Social links">
             <a className="tiktok-link" href="https://www.tiktok.com/@rewire.app0" aria-label="Follow Rewire on TikTok">
               <img src="/tiktok-icon.png" alt="" />
+              <span>Join us on TikTok</span>
             </a>
           </div>
         </div>

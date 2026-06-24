@@ -334,9 +334,10 @@ body{background:#fff;color:var(--ink)}
 .hero-store-row{display:block;width:340px;max-width:100%;margin:18px 0 0;text-decoration:none}
 .hero-store-row img{display:block;width:100%;height:auto;object-fit:contain}
 .hero-socials{width:100%;display:flex;flex-wrap:wrap;gap:10px;margin-top:17px}
-.hero-socials .tiktok-link{width:46px;height:46px;display:grid;place-items:center;text-decoration:none;transition:transform .2s ease}
-.hero-socials .tiktok-link:hover{transform:translateY(-2px)}
-.hero-socials .tiktok-link img{width:42px;height:42px;object-fit:contain;display:block}
+.hero-socials .tiktok-link{height:48px;display:inline-flex;align-items:center;gap:9px;padding:5px 17px 5px 7px;border:1px solid rgba(123,184,255,.32);border-radius:999px;background:#fff;color:#10233d;text-decoration:none;font:800 13px 'Manrope',sans-serif;box-shadow:0 10px 25px rgba(32,91,145,.1);transition:transform .2s ease,box-shadow .2s ease}
+.hero-socials .tiktok-link:hover{transform:translateY(-2px);box-shadow:0 14px 30px rgba(32,91,145,.16)}
+.hero-socials .tiktok-link img{width:36px;height:36px;object-fit:contain;display:block}
+.hero-socials .tiktok-link span{white-space:nowrap}
 .hero-device-wrap{position:relative;min-width:0;min-height:560px;display:flex;align-items:center;justify-content:flex-end;isolation:isolate}
 .hero-device-wrap:before{content:'';position:absolute;z-index:-1;right:-11%;top:11%;width:min(620px,58vw);height:min(510px,48vw);border-radius:50%;background:radial-gradient(ellipse,rgba(255,255,255,.96) 0%,rgba(221,237,255,.74) 47%,rgba(65,159,255,.13) 72%,transparent 100%);filter:blur(10px)}
 .hero-device-wrap img{display:block;width:clamp(430px,48vw,630px);height:auto;max-width:none;object-fit:contain;opacity:0;transform:translate(28px,24px) scale(.96);filter:drop-shadow(0 26px 34px rgba(35,88,139,.16));transition:opacity .72s ease,transform .82s cubic-bezier(.18,.8,.25,1)}
@@ -367,8 +368,8 @@ body{background:#fff;color:var(--ink)}
   .hero-waitlist button{height:48px;width:100%}
   .hero-error{margin:0 4px 6px;text-align:center}
   .hero-store-row{width:min(310px,100%)}
-  .hero-socials .tiktok-link{width:44px;height:44px}
-  .hero-socials .tiktok-link img{width:40px;height:40px}
+  .hero-socials .tiktok-link{height:46px;padding-right:15px}
+  .hero-socials .tiktok-link img{width:34px;height:34px}
   .hero-device-wrap{min-height:315px}
   .hero-device-wrap img{width:100%;max-width:420px}
 }
