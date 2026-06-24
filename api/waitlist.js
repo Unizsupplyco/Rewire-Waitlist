@@ -33,6 +33,7 @@ export default async function handler(request, response) {
   const body = typeof request.body === 'object' && request.body !== null ? request.body : {};
   const email = String(body.email || '').trim().toLowerCase();
   const promoCode = String(body.promoCode || '').trim().toUpperCase();
+  const source = String(body.source || '').trim().slice(0, 80);
 
   if (!emailPattern.test(email)) {
     sendJson(response, 400, { error: 'Enter a valid email address.' });
@@ -56,7 +57,7 @@ export default async function handler(request, response) {
       body: JSON.stringify({
         email,
         promo_code: promoCode || null,
-        source: 'website'
+        source: source || 'website'
       })
     });
 

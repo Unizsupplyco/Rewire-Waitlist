@@ -36,6 +36,7 @@ function Header() {
 
 function Hero() {
   const [email, setEmail] = useState('');
+  const [source, setSource] = useState('');
   const [status, setStatus] = useState('idle');
   const [errorMessage, setErrorMessage] = useState('');
   const [phoneLoaded, setPhoneLoaded] = useState(false);
@@ -58,7 +59,7 @@ function Hero() {
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ email: normalizedEmail, promoCode: '' })
+        body: JSON.stringify({ email: normalizedEmail, promoCode: '', source: source.trim() })
       });
       resultText = await response.text();
     } catch {
@@ -84,9 +85,13 @@ function Hero() {
           <p>Build better habits, take your control back<br className="desktop"/> and rebuild discipline <strong>one day at a time.</strong></p>
           <div className="hero-proof">Join 50+ other people</div>
           <form className="hero-waitlist" onSubmit={submit} noValidate>
-            <label>
+            <label className="hero-email-field">
               <span className="sr-only">Email address</span>
               <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Enter your email" aria-invalid={status === 'error'} />
+            </label>
+            <label className="hero-source-field">
+              <span className="sr-only">Where did you hear about Rewire?</span>
+              <input value={source} onChange={e => setSource(e.target.value)} placeholder="Where did you hear about us? (optional)" maxLength={80} />
             </label>
             <button type="submit" disabled={status === 'loading'}>{status === 'loading' ? 'Sending...' : 'Get notified'} <ArrowRight /></button>
             {status === 'error' && <small className="hero-error" role="alert">{errorMessage}</small>}
