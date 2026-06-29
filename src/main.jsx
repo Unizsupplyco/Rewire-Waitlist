@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Analytics } from '@vercel/analytics/react';
 import {
-  ArrowRight, Check, ChevronLeft, ChevronRight, CircleCheck, Flame, Heart, LockKeyhole,
+  ArrowRight, Check, ChevronDown, ChevronLeft, ChevronRight, CircleCheck, Flame, Heart, LockKeyhole,
   Menu, ShieldCheck, Sparkles, Target, TimerReset, TrendingUp, X
 } from 'lucide-react';
 import './styles.css';
@@ -27,6 +27,12 @@ function Header() {
       <Brand />
       <nav className={open ? 'nav-links open' : 'nav-links'} aria-label="Main navigation">
         <a href="#achievements">Achievements</a><a href="#how">How it works</a><a href="#stories">Stories</a><a href="#faq">FAQ</a>
+        <details className="nav-dropdown">
+          <summary>Manage Account <ChevronDown /></summary>
+          <div className="nav-dropdown-menu">
+            <a href="/delete-account">Delete Account</a>
+          </div>
+        </details>
       </nav>
       <a className="nav-cta" href="/#waitlist">Join waitlist</a>
       <button className="menu" onClick={() => setOpen(!open)} aria-label="Toggle navigation">{open ? <X /> : <Menu />}</button>
@@ -391,6 +397,148 @@ function PrivacyPolicyPage() {
   </div>;
 }
 
+function DeleteAccountPage() {
+  const [form, setForm] = useState({
+    accountEmail: '',
+    confirmEmail: '',
+    reason: '',
+    additionalInfo: '',
+    confirmed: false
+  });
+  const [errorMessage, setErrorMessage] = useState('');
+  const [submitted, setSubmitted] = useState(false);
+
+  const updateField = (field, value) => {
+    setForm(current => ({ ...current, [field]: value }));
+    setErrorMessage('');
+  };
+
+  function submitDeletionRequest(e) {
+    e.preventDefault();
+    const accountEmail = form.accountEmail.trim();
+    const confirmEmail = form.confirmEmail.trim();
+    const reason = form.reason.trim();
+    const additionalInfo = form.additionalInfo.trim();
+    const normalizedAccountEmail = accountEmail.toLowerCase();
+    const normalizedConfirmEmail = confirmEmail.toLowerCase();
+
+    if (!accountEmail || !confirmEmail || !reason) {
+      setErrorMessage('Please complete the required fields.');
+      setSubmitted(false);
+      return;
+    }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedAccountEmail)) {
+      setErrorMessage('Enter a valid Rewire account email address.');
+      setSubmitted(false);
+      return;
+    }
+    if (normalizedAccountEmail !== normalizedConfirmEmail) {
+      setErrorMessage('Both email fields must match.');
+      setSubmitted(false);
+      return;
+    }
+    if (!form.confirmed) {
+      setErrorMessage('Please confirm that you understand the account deletion request.');
+      setSubmitted(false);
+      return;
+    }
+
+    const subject = 'Rewire Account Deletion Request';
+    const body = [
+      'Account email:',
+      accountEmail,
+      '',
+      'Confirmed email:',
+      confirmEmail,
+      '',
+      'Reason for deletion:',
+      reason,
+      '',
+      'Additional information:',
+      additionalInfo || 'Not provided',
+      '',
+      'Confirmation accepted:',
+      form.confirmed ? 'Yes' : 'No'
+    ].join('\n');
+
+    const mailto = `mailto:unizsupplyco@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    setSubmitted(true);
+    setErrorMessage('');
+    window.location.href = mailto;
+  }
+
+  return <div className="delete-account-page" id="top">
+    <Header />
+    <main className="policy-main shell">
+      <div className="policy-hero">
+        <div className="pill-label">Account</div>
+        <h1>Delete your Rewire account</h1>
+        <p>You can request deletion of your Rewire account and associated personal data using this page.</p>
+      </div>
+      <section className="delete-account-card" aria-labelledby="delete-account-title">
+        <div className="delete-copy">
+          <h2 id="delete-account-title">Delete your Rewire account</h2>
+          <p>You can request deletion of your Rewire account and associated personal data using this page.</p>
+          <p>To delete your account, please complete the form below using the same email address connected to your Rewire account.</p>
+          <p>Once we receive your request, we will verify the account and delete the account and associated personal data, unless we are required to keep limited information for legal, security, or fraud-prevention reasons.</p>
+          <p>Some anonymous or non-identifying data may remain if it cannot be linked back to your account.</p>
+        </div>
+        <form className="delete-form" onSubmit={submitDeletionRequest} noValidate>
+          <label>
+            <span>Email address used for the Rewire account</span>
+            <input
+              type="email"
+              required
+              value={form.accountEmail}
+              onChange={e => updateField('accountEmail', e.target.value)}
+              placeholder="Enter the email used for your Rewire account"
+            />
+          </label>
+          <label>
+            <span>Confirm email address</span>
+            <input
+              type="email"
+              required
+              value={form.confirmEmail}
+              onChange={e => updateField('confirmEmail', e.target.value)}
+              placeholder="Confirm your account email"
+            />
+          </label>
+          <label>
+            <span>Reason for deleting account</span>
+            <textarea
+              required
+              value={form.reason}
+              onChange={e => updateField('reason', e.target.value)}
+              placeholder="Tell us why you want to delete your account"
+            />
+          </label>
+          <label>
+            <span>Additional information</span>
+            <textarea
+              value={form.additionalInfo}
+              onChange={e => updateField('additionalInfo', e.target.value)}
+              placeholder="Add anything else we should know"
+            />
+          </label>
+          <label className="delete-checkbox">
+            <input
+              type="checkbox"
+              checked={form.confirmed}
+              onChange={e => updateField('confirmed', e.target.checked)}
+            />
+            <span>I understand that deleting my Rewire account may permanently remove my account and associated data.</span>
+          </label>
+          {errorMessage && <p className="delete-form-message error" role="alert">{errorMessage}</p>}
+          {submitted && <p className="delete-form-message success" role="status">Your deletion request has been prepared. Please make sure the email has been sent from your mail app.</p>}
+          <button type="submit">Delete my account</button>
+        </form>
+      </section>
+    </main>
+    <Footer />
+  </div>;
+}
+
 function Waitlist() {
   const [email,setEmail]=useState('');
   const [promoCode,setPromoCode]=useState('');
@@ -487,6 +635,7 @@ function App(){
   const path = window.location.pathname.replace(/\/$/,'');
   if(path === '/features') return <AppFeaturesPage/>;
   if(path === '/privacy-policy') return <PrivacyPolicyPage/>;
+  if(path === '/delete-account') return <DeleteAccountPage/>;
   if(path === '/success') return <SuccessPage/>;
   return <><Header/><Hero/><ScrollStatement/><FeatureShowcase/><DistractionSection/><Effortless/><Achievements/><HowItWorks/><Testimonials/><FAQ/><Waitlist/><Footer/></>;
 }
