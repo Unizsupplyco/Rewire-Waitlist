@@ -52,7 +52,7 @@ function Hero() {
         <div className="hero-copy">
           <h1>Quit Porn.<br/>Rebuild Discipline.<br/><span>Starting Today</span></h1>
           <p>Build better habits, take your control back<br className="desktop"/> and rebuild discipline <strong>one day at a time.</strong></p>
-          <div className="hero-proof">Join 50+ other people</div>
+          <div className="hero-proof">Join 28+ testers</div>
           <div className="hero-tester-cta">
             <span className="cta-arrow" aria-hidden="true"></span>
             <a className="tester-button" href="/become-a-tester">Become a tester today <ArrowRight /></a>
