@@ -2,12 +2,15 @@ import React, { useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Analytics } from '@vercel/analytics/react';
 import {
-  ArrowRight, Check, ChevronDown, ChevronLeft, ChevronRight, CircleCheck, Flame, Heart, LockKeyhole,
-  Menu, ShieldCheck, Sparkles, Target, TimerReset, TrendingUp, X
+  ArrowRight, Check, ChevronDown, ChevronLeft, ChevronRight, CircleCheck, ExternalLink, Flame, Heart, LockKeyhole,
+  Menu, ShieldCheck, Sparkles, Target, TimerReset, TrendingUp, Users, X
 } from 'lucide-react';
 import './styles.css';
 
 const HERO_PHONES = '/hero-phone-trio-transparent.png';
+const TESTER_GROUP_URL = 'https://groups.google.com/g/rewire-testers';
+const TESTER_OPT_IN_URL = 'https://play.google.com/apps/testing/uk.co.rewireapp.rewire';
+const TESTER_INSTALL_URL = 'https://play.google.com/store/apps/details?id=uk.co.rewireapp.rewire';
 
 function Brand() {
   return <a className="brand" href="/" aria-label="Rewire home">REWIRE</a>;
@@ -26,7 +29,7 @@ function Header() {
     <div className="nav shell">
       <Brand />
       <nav className={open ? 'nav-links open' : 'nav-links'} aria-label="Main navigation">
-        <a href="#achievements">Achievements</a><a href="#how">How it works</a><a href="#stories">Stories</a><a href="#faq">FAQ</a>
+        <a href="/#achievements">Achievements</a><a href="/#how">How it works</a><a href="/#stories">Stories</a><a href="/#faq">FAQ</a>
         <details className="nav-dropdown">
           <summary>Manage Account <ChevronDown /></summary>
           <div className="nav-dropdown-menu">
@@ -34,54 +37,14 @@ function Header() {
           </div>
         </details>
       </nav>
-      <a className="nav-cta" href="/#waitlist">Join waitlist</a>
+      <a className="nav-cta" href="/become-a-tester">Become a tester</a>
       <button className="menu" onClick={() => setOpen(!open)} aria-label="Toggle navigation">{open ? <X /> : <Menu />}</button>
     </div>
   </header>;
 }
 
 function Hero() {
-  const [email, setEmail] = useState('');
-  const [source, setSource] = useState('');
-  const [status, setStatus] = useState('idle');
-  const [errorMessage, setErrorMessage] = useState('');
   const [phoneLoaded, setPhoneLoaded] = useState(false);
-
-  async function submit(e) {
-    e.preventDefault();
-    const normalizedEmail = email.trim().toLowerCase();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail)) {
-      setStatus('error');
-      setErrorMessage('Enter a valid email address.');
-      return;
-    }
-    setStatus('loading');
-    setErrorMessage('');
-    let response;
-    let resultText = '';
-    try {
-      response = await fetch('/api/waitlist', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email: normalizedEmail, promoCode: '', source: source.trim() })
-      });
-      resultText = await response.text();
-    } catch {
-      setStatus('error');
-      setErrorMessage('Network error. Please check your connection and try again.');
-      return;
-    }
-    let result = null;
-    try { result = resultText ? JSON.parse(resultText) : null; } catch {}
-    if (!response.ok) {
-      setStatus('error');
-      setErrorMessage(result?.error || 'We could not add you right now. Please try again.');
-      return;
-    }
-    window.location.assign('/success');
-  }
 
   return <main>
     <section className="hero">
@@ -90,19 +53,11 @@ function Hero() {
           <h1>Quit Porn.<br/>Rebuild Discipline.<br/><span>Starting Today</span></h1>
           <p>Build better habits, take your control back<br className="desktop"/> and rebuild discipline <strong>one day at a time.</strong></p>
           <div className="hero-proof">Join 50+ other people</div>
-          <form className="hero-waitlist" onSubmit={submit} noValidate>
-            <label className="hero-email-field">
-              <span className="sr-only">Email address</span>
-              <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Enter your email" aria-invalid={status === 'error'} />
-            </label>
-            <label className="hero-source-field">
-              <span className="sr-only">Where did you hear about Rewire?</span>
-              <input value={source} onChange={e => setSource(e.target.value)} placeholder="Where did you hear about us? (optional)" maxLength={80} />
-            </label>
-            <button type="submit" disabled={status === 'loading'}>{status === 'loading' ? 'Sending...' : 'Get notified'} <ArrowRight /></button>
-            {status === 'error' && <small className="hero-error" role="alert">{errorMessage}</small>}
-          </form>
-          <a className="hero-store-row" href="#waitlist" aria-label="Join the Rewire launch waitlist">
+          <div className="hero-tester-cta">
+            <span className="cta-arrow" aria-hidden="true"><ArrowRight /></span>
+            <a className="tester-button" href="/become-a-tester">Become a tester today <ArrowRight /></a>
+          </div>
+          <a className="hero-store-row" href="/become-a-tester" aria-label="Become a Rewire tester">
             <img src="/store-badges.png" alt="Coming soon on Google Play and the App Store" />
           </a>
           <div className="hero-socials" aria-label="Social links">
@@ -322,13 +277,13 @@ function Testimonials() {
 
 const faqs = [
   ['What is REWIRE?', 'REWIRE is a private self-control app that helps you track clean streaks, log urges, understand triggers, and choose healthier responses in the moment.'],
-  ['Is REWIRE free?', 'REWIRE is currently in waitlist mode. Early access details and launch pricing will be shared with people who join the waitlist first.'],
-  ['How do I access REWIRE?', 'Join the waitlist with your email address. When early access opens, you will receive the next steps directly by email.'],
+  ['Is REWIRE free?', 'REWIRE is currently available to Android testers. Launch pricing will be shared as the app moves toward public release.'],
+  ['How do I access REWIRE?', 'Become a tester by joining the Rewire Google Group, opting in on Google Play, then installing the Android app.'],
   ['What features does REWIRE include?', 'REWIRE includes urge logging, streak tracking, trigger awareness, analytics, emergency tools, distraction games, breathing resets, and progress milestones.'],
   ['What does the urge button do?', 'The urge button gives you a fast way to log an urge, identify what caused it, and choose a positive response before the cycle takes over.'],
   ['How does REWIRE track progress?', 'REWIRE turns your clean days, logged urges, triggers, responses, and daily missions into simple analytics so you can see what is improving.'],
   ['How does the achievement system work?', 'Achievements mark consistency milestones such as 7 days, 14 days, 1 month, and longer streaks so progress feels visible and rewarding.'],
-  ['Is REWIRE private?', 'Yes. The landing page waitlist only collects your email and optional approved promo code. The product is designed around private, practical recovery support.']
+  ['Is REWIRE private?', 'Yes. Rewire is designed around private, practical recovery support, including tester access through Google Play.']
 ];
 
 function FAQ() {
@@ -540,66 +495,19 @@ function DeleteAccountPage() {
 }
 
 function Waitlist() {
-  const [email,setEmail]=useState('');
-  const [promoCode,setPromoCode]=useState('');
-  const [status,setStatus]=useState('idle');
-  const [errorMessage,setErrorMessage]=useState('');
-  async function submit(e){
-    e.preventDefault();
-    const normalizedEmail = email.trim().toLowerCase();
-    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail)){
-      setStatus('error');
-      setErrorMessage('Enter a valid email address.');
-      return;
-    }
-    const normalizedPromoCode = promoCode.trim().toUpperCase();
-    if(normalizedPromoCode && normalizedPromoCode !== 'PRAISEFRED'){
-      setStatus('error');
-      setErrorMessage('That promo code is not valid.');
-      return;
-    }
-    setStatus('loading');
-    setErrorMessage('');
-    let response;
-    let resultText = '';
-    try {
-      response = await fetch('/api/waitlist', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ email: normalizedEmail, promoCode: normalizedPromoCode || '' })
-      });
-      resultText = await response.text();
-    } catch {
-      setStatus('error');
-      setErrorMessage('Network error. Please check your connection and try again.');
-      return;
-    }
-    let result = null;
-    try { result = resultText ? JSON.parse(resultText) : null; } catch {}
-    if(!response.ok){
-      setStatus('error');
-      setErrorMessage(result?.error || 'We could not add you right now. Please try again.');
-      return;
-    }
-    window.location.assign('/success');
-  }
   return <section className="cta shell" id="waitlist">
-    <div className="cta-copy"><h2>One private app.<br/>A stronger you.</h2><p>Be first to know when Rewire launches. Get early access and practical updates — never spam.</p>
-      <form onSubmit={submit} noValidate>
-        <label><span className="sr-only">Email address</span><input type="email" value={email} onChange={e=>setEmail(e.target.value)} placeholder="Email address" aria-invalid={status==='error'} /></label>
-        <label><span className="sr-only">Promo code</span><input className="promo-input" value={promoCode} onChange={e=>setPromoCode(e.target.value.toUpperCase())} placeholder="Promo code (optional)" autoCapitalize="characters" autoCorrect="off" spellCheck="false" maxLength={50} /></label>
-        <button disabled={status==='loading'}>{status==='loading'?'Joining…':'Join waitlist'} <ArrowRight/></button>
-        {status==='error' && <small className="error" role="alert">{errorMessage}</small>}
-      </form>
-      <div className="privacy"><ShieldCheck/> Private by design. <a href="/privacy-policy">Privacy policy</a>. Unsubscribe anytime.</div>
+    <div className="cta-copy"><h2>One private app.<br/>A stronger you.</h2><p>Testing is open on Android. Join the Rewire tester group, opt in through Google Play, then install the app on your device.</p>
+      <div className="tester-cta-row">
+        <span className="cta-arrow light" aria-hidden="true"><ArrowRight /></span>
+        <a className="tester-button dark" href="/become-a-tester">Become a tester today <ArrowRight/></a>
+      </div>
+      <div className="privacy"><ShieldCheck/> Private by design. <a href="/privacy-policy">Privacy policy</a>.</div>
     </div>
     <div className="cta-phone"><img className="cta-device-art" src="/cta-two-phones.png" alt="Rewire streak and distraction games app screens"/></div>
   </section>;
 }
 
-function Footer() { return <footer id="privacy"><div className="shell footer-grid"><div><Brand/><p>Private tools for breaking cycles,<br/>beating urges, and rebuilding discipline.</p><div className="socials"><span>●</span><span>●</span><span>●</span></div></div><div><b>Product</b><a href="#features">Features</a><a href="#how">How it works</a><a href="#waitlist">Waitlist</a></div><div><b>Company</b><a href="#stories">Stories</a><a href="#">About</a><a href="#">Contact</a></div><div><b>Legal</b><a href="/privacy-policy">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></div></div><div className="shell footer-bottom"><span>© 2026 Rewire. All rights reserved.</span><span>Made for better days.</span></div></footer>; }
+function Footer() { return <footer id="privacy"><div className="shell footer-grid"><div><Brand/><p>Private tools for breaking cycles,<br/>beating urges, and rebuilding discipline.</p><div className="socials"><span>●</span><span>●</span><span>●</span></div></div><div><b>Product</b><a href="/features">Features</a><a href="/#how">How it works</a><a href="/become-a-tester">Become a tester</a></div><div><b>Company</b><a href="/#stories">Stories</a><a href="#">About</a><a href="#">Contact</a></div><div><b>Legal</b><a href="/privacy-policy">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></div></div><div className="shell footer-bottom"><span>© 2026 Rewire. All rights reserved.</span><span>Made for better days.</span></div></footer>; }
 
 const appFeatures = [
   ['Block the urge', 'Interrupt the moment immediately, then choose a positive response before the urge takes control.', '/feature-block-urge.png'],
@@ -621,7 +529,43 @@ function AppFeaturesPage() {
           <div className="app-feature-copy"><h2>{title}</h2><p>{copy}</p></div>
         </article>)}
       </div>
-      <a className="features-cta" href="/#waitlist">Join the waitlist <ArrowRight /></a>
+      <a className="features-cta" href="/become-a-tester">Become a tester <ArrowRight /></a>
+    </main>
+    <Footer />
+  </div>;
+}
+
+const testerSteps = [
+  ['Join the Google Group', 'Use the same Google account you use on your Android device. This gives your account access to the private test.', TESTER_GROUP_URL, 'Join group', <Users />],
+  ['Opt in on Google Play', 'After joining the group, open the testing page and choose to become a tester for Rewire.', TESTER_OPT_IN_URL, 'Opt in', <Check />],
+  ['Install on Android', 'Once opted in, install Rewire from Google Play on your Android phone and start testing.', TESTER_INSTALL_URL, 'Install app', <ArrowRight />],
+];
+
+function TesterPage() {
+  return <div className="tester-page" id="top">
+    <Header />
+    <main className="tester-main shell">
+      <section className="tester-hero">
+        <div className="pill-label">Android testing</div>
+        <h1>Become a Rewire tester</h1>
+        <p>Follow these three steps in order so Google Play can give your account access to the Android test build.</p>
+        <a className="tester-button" href={TESTER_GROUP_URL} target="_blank" rel="noreferrer">Start with the Google Group <ExternalLink /></a>
+      </section>
+      <section className="tester-steps" aria-label="Tester setup steps">
+        {testerSteps.map(([title, copy, href, label, icon], index) =>
+          <article className="tester-step" key={title}>
+            <div className="tester-step-number">0{index + 1}</div>
+            <div className="tester-step-icon">{icon}</div>
+            <h2>{title}</h2>
+            <p>{copy}</p>
+            <a href={href} target="_blank" rel="noreferrer">{label} <ExternalLink /></a>
+          </article>
+        )}
+      </section>
+      <section className="tester-note">
+        <ShieldCheck />
+        <p>Complete the Google Group step first. If you skip it, Google Play may not recognize you as an approved tester.</p>
+      </section>
     </main>
     <Footer />
   </div>;
@@ -634,6 +578,7 @@ function SuccessPage(){
 function App(){
   const path = window.location.pathname.replace(/\/$/,'');
   if(path === '/features') return <AppFeaturesPage/>;
+  if(path === '/become-a-tester') return <TesterPage/>;
   if(path === '/privacy-policy') return <PrivacyPolicyPage/>;
   if(path === '/delete-account') return <DeleteAccountPage/>;
   if(path === '/success') return <SuccessPage/>;

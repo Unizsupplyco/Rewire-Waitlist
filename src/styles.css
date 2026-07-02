@@ -419,3 +419,33 @@ html,body{overflow-x:hidden}
   .scroll-statement:before{top:-62px;height:92px}
   .scroll-statement-inner{min-height:64vh;padding-block:34px}
 }
+
+/* Tester CTA and setup page */
+.hero-tester-cta,.tester-cta-row{display:flex;align-items:center;gap:13px;margin-top:18px}
+.tester-button{min-height:54px;border:0;border-radius:999px;background:linear-gradient(135deg,#419fff,#7bb8ff);color:#fff;padding:0 24px;display:inline-flex;align-items:center;justify-content:center;gap:10px;font:800 14px 'Manrope',sans-serif;text-decoration:none;white-space:nowrap;box-shadow:0 14px 30px rgba(65,159,255,.26);transition:transform .2s ease,box-shadow .2s ease}
+.tester-button:hover{transform:translateY(-2px);box-shadow:0 18px 38px rgba(65,159,255,.32)}
+.tester-button svg{width:16px;height:16px}
+.tester-button.dark{background:#10233d;box-shadow:0 14px 30px rgba(16,35,61,.22)}
+.cta-arrow{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;color:#419fff;background:#fff;border:1px solid rgba(123,184,255,.32);box-shadow:0 12px 26px rgba(32,91,145,.12);animation:testerArrowPulse 1.6s ease-in-out infinite}
+.cta-arrow svg{width:24px;height:24px}
+.cta-arrow.light{color:#fff;background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.32);box-shadow:none}
+@keyframes testerArrowPulse{0%,100%{transform:translateX(0)}50%{transform:translateX(7px)}}
+.tester-page{min-height:100vh;background:linear-gradient(180deg,#eaf5ff 0,#f8fbff 390px,#fff 100%)}
+.tester-main{padding:142px 0 92px}
+.tester-hero{text-align:center;max-width:790px;margin:0 auto 34px}
+.tester-hero h1{font:800 clamp(44px,6vw,76px)/.98 'Manrope',sans-serif;letter-spacing:-3px;color:#10233d;margin:18px 0 13px}
+.tester-hero p{margin:0 auto 24px;color:#63758b;font-size:15px;line-height:1.7;max-width:610px}
+.tester-steps{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-top:28px}
+.tester-step{position:relative;min-height:310px;padding:28px 24px 24px;border:1px solid rgba(123,184,255,.3);border-radius:28px;background:rgba(255,255,255,.9);box-shadow:0 24px 60px rgba(32,91,145,.11);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.tester-step-number{position:absolute;right:22px;top:20px;color:#d6eaff;font:800 34px/1 'Manrope',sans-serif}
+.tester-step-icon{width:50px;height:50px;border-radius:16px;display:grid;place-items:center;background:#e5f2ff;color:#419fff;margin-bottom:22px}
+.tester-step-icon svg{width:22px;height:22px}
+.tester-step h2{font:800 21px/1.18 'Manrope',sans-serif;letter-spacing:-.5px;color:#10233d;margin:0 0 12px;max-width:210px}
+.tester-step p{color:#63758b;font-size:13px;line-height:1.68;margin:0 0 22px}
+.tester-step a{position:absolute;left:24px;right:24px;bottom:24px;height:46px;border-radius:999px;background:#10233d;color:#fff;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:8px;font:800 13px 'Manrope',sans-serif}
+.tester-step a svg{width:14px;height:14px}
+.tester-note{width:min(760px,100%);margin:24px auto 0;display:grid;grid-template-columns:42px 1fr;align-items:center;gap:13px;padding:16px 18px;border:1px solid rgba(123,184,255,.28);border-radius:22px;background:#f7fbff;color:#425a75}
+.tester-note svg{width:24px;height:24px;color:#419fff}
+.tester-note p{margin:0;font-size:13px;line-height:1.6;font-weight:700}
+@media(max-width:900px){.tester-steps{grid-template-columns:1fr}.tester-step{min-height:260px}.hero-tester-cta,.tester-cta-row{justify-content:center}.tester-main{padding-top:118px}.tester-hero h1{letter-spacing:-2.2px}}
+@media(max-width:540px){.hero-tester-cta,.tester-cta-row{flex-direction:column;gap:10px}.cta-arrow{transform:rotate(90deg);animation:none}.tester-button{width:100%;white-space:normal;text-align:center}.tester-step{padding:24px 20px;min-height:285px}.tester-step a{left:20px;right:20px}.tester-note{grid-template-columns:1fr;text-align:center;justify-items:center}}
