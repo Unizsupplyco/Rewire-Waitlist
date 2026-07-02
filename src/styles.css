@@ -421,15 +421,16 @@ html,body{overflow-x:hidden}
 }
 
 /* Tester CTA and setup page */
-.hero-tester-cta,.tester-cta-row{display:flex;align-items:center;gap:13px;margin-top:18px}
+.hero-tester-cta,.tester-cta-row{display:flex;align-items:center;gap:15px;margin-top:18px}
 .tester-button{min-height:54px;border:0;border-radius:999px;background:linear-gradient(135deg,#419fff,#7bb8ff);color:#fff;padding:0 24px;display:inline-flex;align-items:center;justify-content:center;gap:10px;font:800 14px 'Manrope',sans-serif;text-decoration:none;white-space:nowrap;box-shadow:0 14px 30px rgba(65,159,255,.26);transition:transform .2s ease,box-shadow .2s ease}
 .tester-button:hover{transform:translateY(-2px);box-shadow:0 18px 38px rgba(65,159,255,.32)}
 .tester-button svg{width:16px;height:16px}
 .tester-button.dark{background:#10233d;box-shadow:0 14px 30px rgba(16,35,61,.22)}
-.cta-arrow{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;color:#419fff;background:#fff;border:1px solid rgba(123,184,255,.32);box-shadow:0 12px 26px rgba(32,91,145,.12);animation:testerArrowPulse 1.6s ease-in-out infinite}
-.cta-arrow svg{width:24px;height:24px}
-.cta-arrow.light{color:#fff;background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.32);box-shadow:none}
-@keyframes testerArrowPulse{0%,100%{transform:translateX(0)}50%{transform:translateX(7px)}}
+.cta-arrow{position:relative;display:block;flex:0 0 auto;width:74px;height:32px;color:#419fff;animation:testerArrowPulse 1.6s ease-in-out infinite}
+.cta-arrow:before{content:'';position:absolute;left:3px;top:17px;width:58px;height:17px;border-top:3px solid currentColor;border-radius:58% 45% 0 0;transform:rotate(8deg)}
+.cta-arrow:after{content:'';position:absolute;right:4px;top:10px;width:17px;height:17px;border-top:3px solid currentColor;border-right:3px solid currentColor;transform:rotate(48deg) skew(-8deg)}
+.cta-arrow.light{color:#fff}
+@keyframes testerArrowPulse{0%,100%{transform:translateX(0) rotate(-4deg)}50%{transform:translateX(7px) rotate(-4deg)}}
 .tester-page{min-height:100vh;background:linear-gradient(180deg,#eaf5ff 0,#f8fbff 390px,#fff 100%)}
 .tester-main{padding:142px 0 92px}
 .tester-hero{text-align:center;max-width:790px;margin:0 auto 34px}

@@ -54,7 +54,7 @@ function Hero() {
           <p>Build better habits, take your control back<br className="desktop"/> and rebuild discipline <strong>one day at a time.</strong></p>
           <div className="hero-proof">Join 50+ other people</div>
           <div className="hero-tester-cta">
-            <span className="cta-arrow" aria-hidden="true"><ArrowRight /></span>
+            <span className="cta-arrow" aria-hidden="true"></span>
             <a className="tester-button" href="/become-a-tester">Become a tester today <ArrowRight /></a>
           </div>
           <a className="hero-store-row" href="/become-a-tester" aria-label="Become a Rewire tester">
@@ -498,7 +498,7 @@ function Waitlist() {
   return <section className="cta shell" id="waitlist">
     <div className="cta-copy"><h2>One private app.<br/>A stronger you.</h2><p>Testing is open on Android. Join the Rewire tester group, opt in through Google Play, then install the app on your device.</p>
       <div className="tester-cta-row">
-        <span className="cta-arrow light" aria-hidden="true"><ArrowRight /></span>
+        <span className="cta-arrow light" aria-hidden="true"></span>
         <a className="tester-button dark" href="/become-a-tester">Become a tester today <ArrowRight/></a>
       </div>
       <div className="privacy"><ShieldCheck/> Private by design. <a href="/privacy-policy">Privacy policy</a>.</div>
