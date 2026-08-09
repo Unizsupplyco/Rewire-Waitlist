@@ -12,7 +12,8 @@ body{background:#fff;color:var(--ink)}
 .nav{width:min(1040px,calc(100% - 32px));min-height:58px;padding:9px 12px 9px 20px;border-radius:999px;background:rgba(234,245,255,.94);border:1px solid rgba(123,184,255,.16);transition:background .3s ease,border-color .3s ease,box-shadow .3s ease,backdrop-filter .3s ease}
 .header.scrolled{top:10px}
 .header.scrolled .nav{background:rgba(255,255,255,.68);border-color:rgba(255,255,255,.78);box-shadow:0 12px 35px rgba(32,91,145,.14);backdrop-filter:blur(18px) saturate(155%);-webkit-backdrop-filter:blur(18px) saturate(155%)}
-.brand{font-family:'Manrope',sans-serif;font-size:19px;font-weight:800;letter-spacing:.14em;color:#163457}
+.brand{font-family:'Manrope',sans-serif;font-size:19px;font-weight:800;letter-spacing:0;color:#163457;display:inline-flex;align-items:center;gap:10px;text-decoration:none}
+.brand-logo{width:32px;height:32px;border-radius:50%;object-fit:cover;box-shadow:0 2px 8px rgba(65,159,255,0.25)}
 .brand-mark{display:none}
 .nav-cta,.orange-button{background:linear-gradient(135deg,#419fff,#7bb8ff);box-shadow:0 6px 16px rgba(65,159,255,.2)}
 .hero{min-height:805px;padding-top:132px;background:linear-gradient(180deg,#eaf5ff 0%,#f7fbff 58%,#fff 100%);border-radius:0;overflow:hidden}

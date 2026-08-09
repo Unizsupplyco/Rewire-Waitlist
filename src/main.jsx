@@ -13,7 +13,7 @@ const TESTER_OPT_IN_URL = 'https://play.google.com/apps/testing/uk.co.rewireapp.
 const TESTER_INSTALL_URL = 'https://play.google.com/store/apps/details?id=uk.co.rewireapp.rewire';
 
 function Brand() {
-  return <a className="brand" href="/" aria-label="Rewire home">REWIRE</a>;
+  return <a className="brand" href="/" aria-label="Rewire home"><img src="/app-logo.jpg" alt="Rewire logo" className="brand-logo" /><span>REWIRE</span></a>;
 }
 
 function Header() {
@@ -57,8 +57,8 @@ function Hero() {
             <span className="cta-arrow" aria-hidden="true"></span>
             <a className="tester-button" href="/become-a-tester">Become a tester today <ArrowRight /></a>
           </div>
-          <a className="hero-store-row" href="/become-a-tester" aria-label="Become a Rewire tester">
-            <img src="/store-badges.png" alt="Coming soon on Google Play and the App Store" />
+          <a className="hero-store-row" href={TESTER_INSTALL_URL} target="_blank" rel="noreferrer" aria-label="Download Rewire on Google Play">
+            <img src="/store-badges.png" alt="Get Rewire on Google Play" />
           </a>
           <div className="hero-socials" aria-label="Social links">
             <a className="tiktok-link" href="https://www.tiktok.com/@rewire.app0" aria-label="Follow Rewire on TikTok">
@@ -169,12 +169,10 @@ function Effortless() {
 }
 
 const achievementBadges = [
-  ['/achievement-wheel/7-days.png', '7 Days achievement'],
-  ['/achievement-wheel/14-days.png', '14 Days achievement'],
-  ['/achievement-wheel/1-month.png', '1 Month achievement'],
-  ['/achievement-wheel/3-months.png', '3 Months achievement'],
-  ['/achievement-wheel/4-months.png', '4 Months achievement'],
-  ['/achievement-wheel/freedom.png', 'Freedom achievement'],
+  ['/achievement-wheel/broken-chain.png', 'Break the Cycle achievement'],
+  ['/achievement-wheel/clock-wings.png', 'Momentum achievement'],
+  ['/achievement-wheel/sun-steps.png', 'New Dawn achievement'],
+  ['/achievement-wheel/crown.png', 'Crown of Discipline achievement'],
 ];
 
 function Achievements() {
