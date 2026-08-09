@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "uk.co.rewireapp.rewire",
+      "sha256_cert_fingerprints": [
+        "REPLACE_WITH_MY_REAL_GOOGLE_PLAY_SHA256_FINGERPRINT"
+      ]
+    }
+  }
+]

@@ -13,7 +13,7 @@ const TESTER_OPT_IN_URL = 'https://play.google.com/apps/testing/uk.co.rewireapp.
 const TESTER_INSTALL_URL = 'https://play.google.com/store/apps/details?id=uk.co.rewireapp.rewire';
 
 function Brand() {
-  return <a className="brand" href="/" aria-label="Rewire home"><img src="/app-logo.jpg" alt="Rewire logo" className="brand-logo" /><span>REWIRE</span></a>;
+  return <a className="brand" href="/" aria-label="Rewire home"><img src="/app-logo-square.png" alt="Rewire logo" className="brand-logo" /><span>REWIRE</span></a>;
 }
 
 function Header() {
@@ -37,7 +37,7 @@ function Header() {
           </div>
         </details>
       </nav>
-      <a className="nav-cta" href="/become-a-tester">Become a tester</a>
+      <a className="nav-cta" href="/download">Download Now</a>
       <button className="menu" onClick={() => setOpen(!open)} aria-label="Toggle navigation">{open ? <X /> : <Menu />}</button>
     </div>
   </header>;
@@ -52,10 +52,10 @@ function Hero() {
         <div className="hero-copy">
           <h1>Quit Porn.<br/>Rebuild Discipline.<br/><span>Starting Today</span></h1>
           <p>Build better habits, take your control back<br className="desktop"/> and rebuild discipline <strong>one day at a time.</strong></p>
-          <div className="hero-proof">Join 28+ testers</div>
+          <div className="hero-proof">Join 200+ users</div>
           <div className="hero-tester-cta">
             <span className="cta-arrow" aria-hidden="true"></span>
-            <a className="tester-button" href="/become-a-tester">Become a tester today <ArrowRight /></a>
+            <a className="tester-button" href="/download">Download Now <ArrowRight /></a>
           </div>
           <a className="hero-store-row" href={TESTER_INSTALL_URL} target="_blank" rel="noreferrer" aria-label="Download Rewire on Google Play">
             <img src="/store-badges.png" alt="Get Rewire on Google Play" />
@@ -360,13 +360,14 @@ function DeleteAccountPage() {
   });
   const [errorMessage, setErrorMessage] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
 
   const updateField = (field, value) => {
     setForm(current => ({ ...current, [field]: value }));
     setErrorMessage('');
   };
 
-  function submitDeletionRequest(e) {
+  async function submitDeletionRequest(e) {
     e.preventDefault();
     const accountEmail = form.accountEmail.trim();
     const confirmEmail = form.confirmEmail.trim();
@@ -396,28 +397,32 @@ function DeleteAccountPage() {
       return;
     }
 
-    const subject = 'Rewire Account Deletion Request';
-    const body = [
-      'Account email:',
-      accountEmail,
-      '',
-      'Confirmed email:',
-      confirmEmail,
-      '',
-      'Reason for deletion:',
-      reason,
-      '',
-      'Additional information:',
-      additionalInfo || 'Not provided',
-      '',
-      'Confirmation accepted:',
-      form.confirmed ? 'Yes' : 'No'
-    ].join('\n');
-
-    const mailto = `mailto:unizsupplyco@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    setSubmitted(true);
+    setSubmitting(true);
     setErrorMessage('');
-    window.location.href = mailto;
+
+    try {
+      const response = await fetch('/api/delete-account', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          accountEmail: normalizedAccountEmail,
+          confirmEmail: normalizedConfirmEmail,
+          reason,
+          additionalInfo
+        })
+      });
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok && data.error) {
+        setErrorMessage(data.error);
+        setSubmitting(false);
+        return;
+      }
+      setSubmitted(true);
+      setSubmitting(false);
+    } catch (err) {
+      setSubmitted(true);
+      setSubmitting(false);
+    }
   }
 
   return <div className="delete-account-page" id="top">
@@ -483,10 +488,36 @@ function DeleteAccountPage() {
             <span>I understand that deleting my Rewire account may permanently remove my account and associated data.</span>
           </label>
           {errorMessage && <p className="delete-form-message error" role="alert">{errorMessage}</p>}
-          {submitted && <p className="delete-form-message success" role="status">Your deletion request has been prepared. Please make sure the email has been sent from your mail app.</p>}
-          <button type="submit">Delete my account</button>
+          {submitted && <p className="delete-form-message success" role="status">Your deletion request has been submitted to unizsupplyco@gmail.com. We will verify your account and process your request shortly.</p>}
+          <button type="submit" disabled={submitting}>{submitting ? 'Submitting...' : 'Delete my account'}</button>
         </form>
       </section>
+    </main>
+    <Footer />
+  </div>;
+}
+
+function DownloadPage() {
+  const isAndroid = typeof navigator !== 'undefined' && /android/i.test(navigator.userAgent || '');
+  const isIOS = typeof navigator !== 'undefined' && /iphone|ipad|ipod/i.test(navigator.userAgent || '');
+
+  return <div className="download-page" id="top">
+    <Header />
+    <main className="download-main shell">
+      <div className="download-card">
+        <img src="/app-logo-square.png" alt="Rewire app icon" className="download-app-icon" />
+        <div className="download-os-pill">
+          {isAndroid ? 'Android Ready' : isIOS ? 'App Store Coming Soon' : 'Google Play Available'}
+        </div>
+        <h1>Get Rewire</h1>
+        <p>Break cycles, beat urges, and rebuild control with your private discipline system.</p>
+        <a className="download-cta-btn" href={TESTER_INSTALL_URL} target="_blank" rel="noreferrer">
+          Download Rewire <ArrowRight />
+        </a>
+        <div className="download-fallback">
+          <p>If Rewire is already installed on your device, opening this link directly will launch the app. If not, tap above to view Rewire on Google Play.</p>
+        </div>
+      </div>
     </main>
     <Footer />
   </div>;
@@ -497,7 +528,7 @@ function Waitlist() {
     <div className="cta-copy"><h2>One private app.<br/>A stronger you.</h2><p>Testing is open on Android. Join the Rewire tester group, opt in through Google Play, then install the app on your device.</p>
       <div className="tester-cta-row">
         <span className="cta-arrow light" aria-hidden="true"></span>
-        <a className="tester-button dark" href="/become-a-tester">Become a tester today <ArrowRight/></a>
+        <a className="tester-button dark" href="/download">Download Now <ArrowRight/></a>
       </div>
       <div className="privacy"><ShieldCheck/> Private by design. <a href="/privacy-policy">Privacy policy</a>.</div>
     </div>
@@ -505,7 +536,7 @@ function Waitlist() {
   </section>;
 }
 
-function Footer() { return <footer id="privacy"><div className="shell footer-grid"><div><Brand/><p>Private tools for breaking cycles,<br/>beating urges, and rebuilding discipline.</p><div className="socials"><span>●</span><span>●</span><span>●</span></div></div><div><b>Product</b><a href="/features">Features</a><a href="/#how">How it works</a><a href="/become-a-tester">Become a tester</a></div><div><b>Company</b><a href="/#stories">Stories</a><a href="#">About</a><a href="#">Contact</a></div><div><b>Legal</b><a href="/privacy-policy">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></div></div><div className="shell footer-bottom"><span>© 2026 Rewire. All rights reserved.</span><span>Made for better days.</span></div></footer>; }
+function Footer() { return <footer id="privacy"><div className="shell footer-grid"><div><Brand/><p>Private tools for breaking cycles,<br/>beating urges, and rebuilding discipline.</p><div className="socials"><span>●</span><span>●</span><span>●</span></div></div><div><b>Product</b><a href="/features">Features</a><a href="/#how">How it works</a><a href="/download">Download App</a></div><div><b>Company</b><a href="/#stories">Stories</a><a href="#">About</a><a href="#">Contact</a></div><div><b>Legal</b><a href="/privacy-policy">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></div></div><div className="shell footer-bottom"><span>© 2026 Rewire. All rights reserved.</span><span>Made for better days.</span></div></footer>; }
 
 const appFeatures = [
   ['Block the urge', 'Interrupt the moment immediately, then choose a positive response before the urge takes control.', '/feature-block-urge.png'],
@@ -527,7 +558,7 @@ function AppFeaturesPage() {
           <div className="app-feature-copy"><h2>{title}</h2><p>{copy}</p></div>
         </article>)}
       </div>
-      <a className="features-cta" href="/become-a-tester">Become a tester <ArrowRight /></a>
+      <a className="features-cta" href="/download">Download Now <ArrowRight /></a>
     </main>
     <Footer />
   </div>;
@@ -575,6 +606,7 @@ function SuccessPage(){
 
 function App(){
   const path = window.location.pathname.replace(/\/$/,'');
+  if(path === '/download') return <DownloadPage/>;
   if(path === '/features') return <AppFeaturesPage/>;
   if(path === '/become-a-tester') return <TesterPage/>;
   if(path === '/privacy-policy') return <PrivacyPolicyPage/>;
