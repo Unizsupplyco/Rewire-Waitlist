@@ -53,24 +53,25 @@ function Hero() {
           <h1>Quit Porn.<br/>Rebuild Discipline.<br/><span>Starting Today</span></h1>
           <p>Build better habits, take your control back<br className="desktop"/> and rebuild discipline <strong>one day at a time.</strong></p>
           <div className="hero-proof">Join 200+ users</div>
-          <div className="hero-tester-cta">
-            <a className="tester-button" href="/download">Download Now <ArrowRight /></a>
-          </div>
-          <div className="hero-store-row" aria-label="App downloads">
-            <a className="store-badge-btn google-play" href={TESTER_INSTALL_URL} target="_blank" rel="noreferrer" aria-label="Download Rewire on Google Play">
+          <div className="hero-store-row" aria-label="App store downloads">
+            <a className="store-badge-link google-play" href={TESTER_INSTALL_URL} target="_blank" rel="noreferrer" aria-label="Download Rewire on Google Play">
               <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M3.609 1.814L13.792 12 3.61 22.186a1.94 1.94 0 0 1-.61-1.396V3.21a1.94 1.94 0 0 1 .609-1.396zm11.3 9.072l2.67-2.67-12.82-7.398 10.15 10.068zm0 2.228L4.76 23.182l12.819-7.398-2.67-2.67zm1.114-1.114l3.197-1.846a1.2 1.2 0 0 0 0-2.08l-3.197-1.846-2.58 2.58 2.58 2.58z"/></svg>
               <div className="badge-text">
                 <small>GET IT ON</small>
                 <strong>Google Play</strong>
               </div>
             </a>
-            <div className="store-badge-btn app-store disabled" title="App Store release coming soon">
+            <div className="store-badge-link app-store disabled" title="App Store release coming soon">
               <svg viewBox="0 0 24 24" width="22" height="22" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.32c.56-.68.95-1.62.84-2.57-.82.03-1.83.55-2.42 1.24-.52.6-.98 1.56-.86 2.49.92.07 1.88-.47 2.44-1.16z"/></svg>
               <div className="badge-text">
-                <small>App Store</small>
-                <strong>Coming Soon</strong>
+                <small>Download on the</small>
+                <strong>App Store</strong>
               </div>
+              <span className="coming-soon-pill">Coming Soon</span>
             </div>
+          </div>
+          <div className="hero-tester-cta">
+            <a className="tester-button" href="/download">Download Now <ArrowRight /></a>
           </div>
           <div className="hero-socials" aria-label="Social links">
             <a className="tiktok-link" href="https://www.tiktok.com/@rewire.app0" aria-label="Follow Rewire on TikTok">

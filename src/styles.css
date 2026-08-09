@@ -468,12 +468,14 @@ html,body{overflow-x:hidden}
 .brand-logo{width:34px;height:34px;border-radius:10px;object-fit:cover;box-shadow:0 3px 10px rgba(65,159,255,0.2)}
 
 /* Custom store buttons */
-.hero-tester-cta{display:flex;align-items:center;justify-content:center;margin-top:18px;transform:translateX(-10px)}
-.hero-store-row{display:flex;align-items:center;justify-content:center;gap:12px;margin:25px auto 10px;flex-wrap:wrap}
-.store-badge-btn{display:inline-flex;align-items:center;gap:10px;height:48px;padding:0 18px;border-radius:12px;background:#0d1829;color:#fff;text-decoration:none;font-family:'Manrope',sans-serif;transition:transform .2s ease,box-shadow .2s ease,opacity .2s ease}
-.store-badge-btn.google-play:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(13,24,41,.25)}
-.store-badge-btn.disabled{opacity:0.52;background:#152238;cursor:not-allowed;border:1px dashed rgba(255,255,255,.24)}
-.store-badge-btn svg{flex:0 0 auto;color:#fff}
+.hero-tester-cta{display:flex;align-items:center;justify-content:center;margin-top:16px}
+.hero-store-row{display:flex;align-items:center;justify-content:center;gap:14px;margin:18px auto 14px;flex-wrap:wrap}
+.store-badge-link{display:inline-flex;align-items:center;gap:12px;height:46px;padding:0 18px;border-radius:12px;background:#09121f;color:#fff;text-decoration:none;font-family:'Manrope',sans-serif;position:relative;transition:transform .2s ease,box-shadow .2s ease,opacity .2s ease}
+.store-badge-link.google-play:hover{transform:translateY(-2px);box-shadow:0 8px 22px rgba(9,18,31,.3)}
+.store-badge-link.disabled{opacity:0.45;background:#162438;cursor:not-allowed;border:1px dashed rgba(255,255,255,.25)}
+.store-badge-link svg{flex:0 0 auto;color:#fff}
 .badge-text{display:flex;flex-direction:column;text-align:left;line-height:1.15}
-.badge-text small{font-size:9px;letter-spacing:.05em;color:#94a3b8;text-transform:uppercase;font-weight:600}
+.badge-text small{font-size:8px;letter-spacing:.05em;color:#94a3b8;text-transform:uppercase;font-weight:600}
 .badge-text strong{font-size:13px;font-weight:800;color:#fff}
+.coming-soon-pill{position:absolute;top:-8px;right:-6px;background:linear-gradient(135deg,#419fff,#7bb8ff);color:#fff;font-size:9px;font-weight:800;padding:2px 8px;border-radius:10px;box-shadow:0 3px 8px rgba(65,159,255,0.4);letter-spacing:.02em}
+
