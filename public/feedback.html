@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Share feedback | Rewire</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{font-family:Inter,Arial,sans-serif;color:#0b1220;background:#f1f6ff;font-synthesis:none}*{box-sizing:border-box}body{margin:0;padding:52px 18px;min-height:100vh}main{max-width:570px;margin:auto;background:white;border:1px solid #dce7ff;border-radius:22px;overflow:hidden;box-shadow:0 18px 50px rgba(29,78,216,.08)}.bar{height:6px;background:#2563eb}.inner{padding:38px 36px}h1{font-size:29px;letter-spacing:-1.1px;line-height:1.2;margin:0 0 20px;font-weight:800}p{font-size:15px;line-height:1.75;margin:0 0 16px}strong.question{display:block;margin:26px 0 15px;font-size:15px;line-height:1.6}.choices{display:grid;gap:10px}.choice{display:flex;align-items:center;gap:13px;padding:16px;border:1.5px solid #c7d8ff;border-radius:12px;cursor:pointer;transition:.15s;background:#fff;font-size:14px;font-weight:500;line-height:1.4}.choice:hover{border-color:#2563eb;background:#eff5ff}.choice:has(input:checked){border-color:#2563eb;background:#eaf1ff;box-shadow:0 0 0 1px #2563eb}.choice input{accent-color:#2563eb;width:18px;height:18px;margin:0;flex-shrink:0}.other{display:none;margin-top:16px}.other.show{display:block}label[for="details"]{font-weight:600;font-size:14px;display:block;margin-bottom:9px}textarea{display:block;width:100%;border:1.5px solid #b7c9ed;border-radius:12px;padding:14px;resize:vertical;min-height:110px;line-height:1.55;font:14px Inter,Arial,sans-serif;color:#0b1220}textarea:focus{outline:3px solid #d7e5ff;border-color:#2563eb}button{width:100%;border:none;background:#2563eb;color:white;font:700 15px Inter,Arial,sans-serif;padding:17px 24px;border-radius:12px;cursor:pointer;margin-top:24px}button:hover{background:#1d4ed8}button:disabled{opacity:.6;cursor:wait}.fine{margin:17px 0 0;font-size:12px;line-height:1.6;color:#334155}.success{display:none;text-align:center;padding:28px 8px}.success h2{font-size:24px}.error{color:#b91c1c;font-size:13px;margin-top:12px;display:none}.footer{text-align:center;padding:20px;font-size:12px;color:#334155}@media(max-width:600px){body{padding:20px 12px}.inner{padding:28px 20px}h1{font-size:25px}}
+</style>
+</head>
+<body>
+<main><div class="bar"></div><div class="inner">
+<div id="formview"><h1>Can I ask you something?</h1><p>Hey there,</p><p>I'm the founder of Rewire, and I'm trying to make the app genuinely better. Your feedback would mean a lot.</p><strong class="question">What was the main reason you decided not to subscribe?</strong>
+<form id="feedback" action="https://formsubmit.co/founder@rewireapp.co.uk" method="POST">
+<input type="hidden" name="_subject" value="Rewire — User feedback"><input type="hidden" name="_captcha" value="true"><input type="hidden" name="_template" value="table"><input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off">
+<div class="choices" id="choices">
+<label class="choice"><input type="radio" name="reason" value="price" required><span>The price was too high</span></label>
+<label class="choice"><input type="radio" name="reason" value="unsure" required><span>I wasn't sure it would help me</span></label>
+<label class="choice"><input type="radio" name="reason" value="try_more" required><span>I wanted to try more features first</span></label>
+<label class="choice"><input type="radio" name="reason" value="payment" required><span>I had trouble with payment</span></label>
+<label class="choice"><input type="radio" name="reason" value="other" required><span>Something else</span></label>
+</div>
+<div class="other" id="other"><label for="details">Tell us a little more</label><textarea id="details" name="details" placeholder="What could we improve?" maxlength="1500"></textarea></div>
+<button type="submit">Send feedback</button><div class="error" id="error" role="alert">Please try again. If it still fails, email founder@rewireapp.co.uk.</div><p class="fine">Your answer is sent through FormSubmit to our feedback inbox. Please avoid sharing sensitive personal information. You won't need to open your email app.</p>
+</form></div>
+</div><div class="footer">Thanks for helping us make Rewire better.</div></main>
+<script>
+(function(){const form=document.getElementById('feedback'),other=document.getElementById('other'),details=document.getElementById('details');const allowed=['price','unsure','try_more','payment','other'];function sync(){const sel=form.querySelector('input[name="reason"]:checked');const show=sel&&sel.value==='other';other.classList.toggle('show',!!show);details.required=!!show;details.disabled=!show;}form.querySelectorAll('input[name="reason"]').forEach(x=>x.addEventListener('change',sync));const choice=new URLSearchParams(location.search).get('reason');if(allowed.includes(choice)){form.querySelectorAll('input[name="reason"]').forEach(x=>{x.checked=x.value===choice});}sync();})();
+</script>
+</body></html>
